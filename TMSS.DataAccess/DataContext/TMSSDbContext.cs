@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using TMSS.DataAccess.Entities;
 
 namespace TMSS.DataAccess.DataContext
 {
@@ -9,7 +10,7 @@ namespace TMSS.DataAccess.DataContext
         }
 
         public TMSSDbContext(DbContextOptions<TMSSDbContext> options) : base(options) { }
-
+        public virtual DbSet<Procedure> Procedure { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }
@@ -18,7 +19,7 @@ namespace TMSS.DataAccess.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                throw new InvalidOperationException("Connectionstring is missing");
+                optionsBuilder.UseSqlServer(@"Server=.\SQLExpress;Database=TMSS;Trusted_Connection=True;");  // put your connection string
             }
         }
     }
