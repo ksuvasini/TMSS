@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TMSS.DataAccess.Entities;
+using TMSS.Domain.Entities;
 
 namespace TMSS.DataAccess.DataContext
 {
@@ -11,6 +11,7 @@ namespace TMSS.DataAccess.DataContext
 
         public TMSSDbContext(DbContextOptions<TMSSDbContext> options) : base(options) { }
         public virtual DbSet<Procedure> Procedure { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

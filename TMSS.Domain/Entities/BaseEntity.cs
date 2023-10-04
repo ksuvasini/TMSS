@@ -1,4 +1,4 @@
-﻿namespace TMSS.DataAccess.Entities
+﻿namespace TMSS.Domain.Entities
 {
     public class BaseEntity
     {

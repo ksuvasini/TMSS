@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TMSS.DataAccess.Entities;
+﻿using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
 
 namespace TMSS.Infrastructure.Persistance.Repositories

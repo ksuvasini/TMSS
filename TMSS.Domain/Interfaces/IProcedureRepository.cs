@@ -1,4 +1,4 @@
-﻿using TMSS.DataAccess.Entities;
+﻿using TMSS.Domain.Entities;
 
 namespace TMSS.Domain.Interfaces
 {
