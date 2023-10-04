@@ -1,0 +1,62 @@
+﻿@model TMSS.Web.Models.ReportViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+<h4> Generate Report</h4>
+<hr />
+<table>
+    <tr>
+        
+        <td>
+            <label asp-for="SurgeonName" class="control-label" class="control-label">Surgeon</label>
+
+            <form id="form">
+                <input type="search" id="query" name="q" placeholder="Select..">
+                <button>Search</button>
+            </form>
+
+
+        </td>    
+        <td>&nbsp;&nbsp;</td>
+        <td>
+            <label asp-for="ProcedureName" class="control-label" class="control-label">Procedure</label>
+            <form id="form">
+                
+                <input type="search" id="query" name="q" placeholder="Select..">
+                <button>Search</button>
+            </form>
+       
+
+        </td>
+        <td>&nbsp;&nbsp;</td>
+        <td>
+            <label asp-for="ClinicName" class="control-label" class="control-label">Clinic</label>
+            <form id="form">
+                
+                <input type="search" id="query" name="q" placeholder="Select..">
+                <button>Search</button>
+            </form>
+         
+
+        </td>
+        <td>&nbsp;&nbsp;</td>
+          <td>
+            <label asp-for="Complication" class="control-label" class="control-label">Complication</label>
+            <form id="form">
+               
+                <input type="search" id="query" name="q" placeholder="Select..">
+                <button>Search</button>
+            </form>
+       
+
+      </td>
+          </tr>
+
+
+</table>
+@await Html.PartialAsync("~/Views/GenerateReport/Get.cshtml")
+
+

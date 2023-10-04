@@ -1,0 +1,35 @@
+﻿@model TMSS.Web.Models.ClinicViewModel
+
+@{
+    ViewData["Title"] = "Add Clinic";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h3>Add Clinic</h3>
+
+<div class="container">
+<div class="row">
+    <div class="col-md-9">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="ClinicName" class="control-label"></label>
+                <input asp-for="ClinicName" class="form-control" />
+                <span asp-validation-for="ClinicName" class="text-danger"></span>
+                
+            </div>
+            <div class="form-group">
+                <label asp-for="ClinicLocation" class="control-label"></label>
+                <input asp-for="ClinicLocation" class="form-control" type="password" />
+                <span asp-validation-for="ClinicLocation" class="text-danger"></span>
+            </div>
+                       <div class="form-group">
+                <input type="submit" value="Save Clinic Details" class="btn btn-primary" />
+            </div>
+            <b>@ViewBag.message</b>
+        </form>
+    </div>
+</div>
+</div>
+

@@ -1,0 +1,60 @@
+﻿@model TMSS.Web.Models.IncidentViewModel
+
+@* <div> *@
+    <h3>View Details</h3>
+<div class="container" style="border:solid;float:left;">
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PatientName)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.PatientName)
+        </dd>
+     
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ProcedureName)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.ProcedureName)
+        </dd>
+       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ClinicName)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.ClinicName)
+        </dd>
+     
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SurgeonName)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.SurgeonName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Complication)
+        </dt>
+        <dd class = "col-sm-10 custom">
+            @Html.DisplayFor(model => model.Complication)
+        </dd>
+    
+      @*   <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IncidentDetails)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IncidentDetails)
+        </dd> *@
+    </dl>
+</div>
+@* </div> *@
+@* <div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div> *@
+<style >
+
+    .custom {
+        width: 0% !important;
+    }
+</style>
+

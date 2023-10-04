@@ -1,0 +1,35 @@
+﻿@model TMSS.Web.Models.ProcedureViewModel
+
+@{
+    ViewData["Title"] = "Procedure";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<h3>Add Procedure</h3>
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Index">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ProcedureId" class="control-label"></label>
+                <input asp-for="ProcedureId" class="form-control" />
+                <span asp-validation-for="ProcedureId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProcedureName" class="control-label"></label>
+                <input asp-for="ProcedureName" class="form-control" />
+                <span asp-validation-for="ProcedureName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save Procedure" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</div>
+@* <div>
+    <a asp-action="Index">Back to List</a>
+</div> *@
+

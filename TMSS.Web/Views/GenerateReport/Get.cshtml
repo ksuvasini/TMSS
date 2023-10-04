@@ -1,0 +1,68 @@
+﻿@* @model TMSSDemo.Models.GetList
+
+@{
+    ViewData["Title"] = "Get";
+}
+
+<div style="color:blue">
+    <h4>View Report</h4>
+</div>
+<br/>
+<br/>
+<div class="container" style="border:solid;float:left;">
+    
+    <dl class="row" >
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivedInClinic)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.ArrivedInClinic)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ArrivedInTheater)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.ArrivedInTheater)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AnestheticStartTime)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.AnestheticStartTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.KnifeToSkinTime)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.KnifeToSkinTime)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ProcedureFinishTime)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.ProcedureFinishTime)
+        </dd>
+       @*  <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DepartureTime)
+        </dt>
+        <dd class="col-sm-10 custom">
+            @Html.DisplayFor(model => model.DepartureTime)
+        </dd>
+ *@
+
+        @*   <dt class = "col-sm-2">
+        @Html.DisplayNameFor(model => model.IncidentDetails)
+        </dt>
+        <dd class = "col-sm-10">
+        @Html.DisplayFor(model => model.IncidentDetails)
+        </dd> *@
+ @*    </dl>
+</div>
+<style>
+
+    .custom {
+        width: 0% !important;
+    }
+</style> *@ 
