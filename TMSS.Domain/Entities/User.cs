@@ -2,7 +2,7 @@
 
 namespace TMSS.Domain.Entities
 {
-    public class User
+    public class User : BaseEntity
     {
         [Key]
         public int UserId { get; set; }
@@ -10,5 +10,9 @@ namespace TMSS.Domain.Entities
         public string UserName { get; set; }
         [Required]  
         public string Password { get; set; }
+
+        [Required]
+        public string EmailID { get; set; }
+
     }
 }

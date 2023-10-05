@@ -2,7 +2,7 @@
 
 namespace TMSS.Domain.Entities
 {
-    public class RoleDto : BaseEntity
+    public class Role : BaseEntity
     {
         [Key]
         public int RoleId { get; set; }
