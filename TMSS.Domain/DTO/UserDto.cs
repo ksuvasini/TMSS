@@ -13,5 +13,7 @@ namespace TMSS.Domain.DTO
         public string Password { get; set; }    
         public string RoleName { get; set; }
         public bool IsAuthenticated { get; set; }
+
+        public List<UserRoleDto> UserRoles { get; set; }
     }
 }

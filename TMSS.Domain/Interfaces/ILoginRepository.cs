@@ -4,6 +4,8 @@ namespace TMSS.Domain.Interfaces
 {
     public interface ILoginRepository
     {
-        List<UserDto> IsAuthenticated(UserDto userDto);
+        UserDto IsAuthenticated(UserDto userDto);
+
+        List<UserRoleDto> GetUserRoles(UserDto userDto);
     }
 }

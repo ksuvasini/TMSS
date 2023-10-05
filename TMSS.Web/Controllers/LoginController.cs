@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using TMSS.Domain.DTO;
+using TMSS.Infrastructure.Enum;
 using TMSS.Services.Interfaces;
 using TMSS.Web.Models;
 
@@ -27,21 +29,37 @@ namespace TMSSDemo.Controllers
         [HttpPost]
         public IActionResult Index([Bind] LoginViewModel loginViewModel)
         {
-
-
-            var userDetails = _loginService.IsAuthenticated(_mapper.Map<UserDto>(loginViewModel));
-
-            if (userDetails.FirstOrDefault().IsAuthenticated)
+            LoginViewModel userDetails = _mapper.Map<LoginViewModel>(_loginService.IsAuthenticated(_mapper.Map<UserDto>(loginViewModel)));
+            if (userDetails == null) throw new Exception("Invalid Credentials");
+            if (userDetails.IsAuthenticated)
             {
-                if (userDetails.FirstOrDefault().RoleName == "User")
+                if (!userDetails.UserRoles.Any())
+                    throw new Exception("Roles are not assigned to User");
+                if (userDetails.UserRoles.Any(jj =>
+                {
+                    return jj.RoleName == RoleTypeCode.User.ToString();
+                }))
                 {
                     return RedirectToAction("Index", "User");
                 }
-                else if (userDetails.FirstOrDefault().RoleName == "Admin")
+                else if (userDetails.UserRoles.Any(jj => jj.RoleName == RoleTypeCode.User.ToString()))
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("Index", "User");
                 }
             }
+            //if (!userDetails.Any())
+            //    throw new Exception("Invalid Credentials"); 
+            //if (userDetails.FirstOrDefault().IsAuthenticated)
+            //{
+            //    if (userDetails.FirstOrDefault().RoleName == "User")
+            //    {
+            //        return RedirectToAction("Index", "User");
+            //    }
+            //    else if (userDetails.FirstOrDefault().RoleName == "Admin")
+            //    {
+            //        return RedirectToAction("Index", "User");
+            //    }
+            //}
             //if (ad.UserName == "user" && ad.Password == "test")
             //{
             //    // return View("Home/AdminHome");

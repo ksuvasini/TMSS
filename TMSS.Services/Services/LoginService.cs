@@ -15,12 +15,14 @@ namespace TMSS.Services.Services
         public LoginService(ILoginRepository loginRepository)
         {
             _loginRepository = loginRepository;
-
-
         }
-        public List<UserDto> IsAuthenticated(UserDto userDto)
+
+        public UserDto IsAuthenticated(UserDto userDto)
         {
-            return _loginRepository.IsAuthenticated(userDto);
+            UserDto userDetails = _loginRepository.IsAuthenticated(userDto);
+            userDetails.UserRoles = new List<UserRoleDto>();
+            userDetails.UserRoles =  _loginRepository.GetUserRoles(userDto);
+            return userDetails;
         }
     }
 }

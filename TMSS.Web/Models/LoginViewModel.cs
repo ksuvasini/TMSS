@@ -12,7 +12,9 @@ namespace TMSS.Web.Models
 
 		[Required(ErrorMessage = "Password is requried!")]
 		public string? Password { get; set; }
-        public string RoleName { get; set; }
+        public List<UserRoleViewModel> UserRoles { get; set; }
         public bool IsAuthenticated { get; set; }
+
+
     }
 }
