@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using TMSS.DataAccess.DataContext;
 using TMSS.Domain.Interfaces;
 using TMSS.Infrastructure.Persistance.Repositories;
 using TMSS.Services.Interfaces;
@@ -6,6 +9,15 @@ using TMSS.Services.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+//add DB context
+builder.Services.AddDbContext<TMSSDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("TMSS_Global_ConnectionString"));
+
+    if (Debugger.IsAttached)
+        options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()));
+
+}, ServiceLifetime.Singleton);
 builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProcedureRepository, ProcedureRepository>();
