@@ -11,7 +11,7 @@ namespace TMSS.DataAccess.DataContext
 
         public TMSSDbContext(DbContextOptions<TMSSDbContext> options) : base(options) { }
         public virtual DbSet<Procedure> Procedure { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<User> User { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

@@ -1,4 +1,5 @@
-﻿using TMSS.DataAccess.DataContext;
+﻿using AutoMapper;
+using TMSS.DataAccess.DataContext;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Interfaces;
 
@@ -7,12 +8,15 @@ namespace TMSS.Infrastructure.Persistance.Repositories
     public class LoginRepository : ILoginRepository
     {
         public TMSSDbContext _tMSSDbContext { get; set; }
-        public LoginRepository(TMSSDbContext tMSSDbContext)
+        private readonly IMapper _mapper;
+        public LoginRepository(TMSSDbContext tMSSDbContext, IMapper mapper)
         {
             _tMSSDbContext = tMSSDbContext;
+            _mapper = mapper;
         }
         public List<UserRoleDto> GetUserRoles(UserDto userDto)
         {
+
             List<UserRoleDto> roles = new List<UserRoleDto>
             {
                 new UserRoleDto { UserId = 1, RoleId = 1, RoleName = "Admin" },
@@ -24,11 +28,12 @@ namespace TMSS.Infrastructure.Persistance.Repositories
 
         public UserDto IsAuthenticated(UserDto userDto)
         {
-            return new UserDto()
+            UserDto userDetails = _mapper.Map<UserDto>(_tMSSDbContext.User.Where(jj => jj.UserName == userDto.UserName && userDto.Password == jj.Password).FirstOrDefault());
+            if (userDetails != null)
             {
-                IsAuthenticated = true,
-                RoleName = "Admin"
-            };
+                userDetails.IsAuthenticated = true;
+            }
+            return userDetails;
         }
 
     }

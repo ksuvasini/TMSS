@@ -46,6 +46,10 @@ namespace TMSSDemo.Controllers
                 {
                     return RedirectToAction("Index", "User");
                 }
+                else
+                {
+                    return View();
+                }
             }
             //if (!userDetails.Any())
             //    throw new Exception("Invalid Credentials"); 

@@ -9,8 +9,9 @@ namespace TMSS.Web.Profiles
     {
         public UserViewModelProfile()
         {
+            CreateMap<User, UserDto>();
             CreateMap<UserRoleViewModel, UserRoleDto>();
-            CreateMap<UserRoleDto,UserRoleViewModel > ();
+            CreateMap<UserRoleDto,UserRoleViewModel >();
             CreateMap<UserDto, LoginViewModel>();
             CreateMap<LoginViewModel,UserDto> ();
 
