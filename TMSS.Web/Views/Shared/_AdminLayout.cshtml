@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TMSS Admin</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link href="~/css/sidebars.css" rel="stylesheet" />
+  @*   <link href="~/css/sidebars.css" rel="stylesheet" /> *@
     @*   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TMSS.Web.styles.css" asp-append-version="true" / >*@
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
@@ -24,6 +24,10 @@
             user-select: none;
         }
 
+        .btn-check:focus + .btn, .btn:focus
+        {
+            box-shadow:none !important;
+        }
 
         @@media (min-width: 768px) {
             .bd-placeholder-img-lg {
@@ -37,7 +41,7 @@
     <div class="container-fluid">
         <div class="row">
             @*   <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width:20%;"> *@
-            <div class="flex-nowrap flex-shrink-0 p-3" style="width:20%;background: #2A3F54 !important;">
+            <div class="flex-nowrap flex-shrink-0 p-3" style="width:20%;background: #2A3F54 !important;position: fixed;height: 100%;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
                     <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
                     <span class="fs-5 fw-semibold" style="color:white">Admin Dashboard</span>
@@ -60,11 +64,11 @@
                             Settings
                         </button>
                         <div class="collapse" id="dashboard-collapse" style="">
-                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="/Clinic" class="link-dark rounded" style="color:white">Add Clinic</a></li>
-                                <li><a href="/Surgeon" class="link-dark rounded" style="color:white">Add Surgeon</a></li>
-                                <li><a href="/Procedure" class="link-dark rounded" style="color:white">Add Procedure</a></li>
-                                <li><a href="/Complication" class="link-dark rounded" style="color:white">Add Complication</a></li>
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" style="padding-left:9% !important;">
+                                <li><a href="/Clinic" class="link-dark rounded" style="color:white;text-decoration:none">Add Clinic</a></li>
+                                <li><a href="/Surgeon" class="link-dark rounded" style="color:white;text-decoration:none">Add Surgeon</a></li>
+                                <li><a href="/Procedure" class="link-dark rounded" style="color:white;text-decoration:none">Add Procedure</a></li>
+                                <li><a href="/Complication" class="link-dark rounded" style="color:white;text-decoration:none">Add Complication</a></li>
                             </ul>
                         </div>
                     </li>
@@ -99,8 +103,8 @@
                 </ul>
             </div>
 
-       
-        <div class="col py-3">
+
+            <div class="col py-3" style="margin-left: 20%; padding: 0px 10px;">
             @RenderBody()
         </div>
         </div>
