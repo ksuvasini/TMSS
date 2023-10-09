@@ -35,16 +35,16 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="row flex-nowrap">
+        <div class="row">
             @*   <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width:20%;"> *@
-            <div class="flex-shrink-0 p-3 bg-white" style="width:20%;">
+            <div class="flex-nowrap flex-shrink-0 p-3" style="width:20%;background: #2A3F54 !important;">
                 <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
                     <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
-                    <span class="fs-5 fw-semibold">Collapsible</span>
+                    <span class="fs-5 fw-semibold" style="color:white">Admin Dashboard</span>
                 </a>
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false" style="color:white">
                             Add Incident
                         </button>
                         @*  <div class="collapse" id="home-collapse" style="">
@@ -56,20 +56,21 @@
                         </div> *@
                     </li>
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color:white">
                             Settings
                         </button>
                         <div class="collapse" id="dashboard-collapse" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                                <li><a href="/Clinic" class="link-dark rounded">Add Clinic</a></li>
-                                <li><a href="/Surgeon" class="link-dark rounded">Add Surgeon</a></li>
-                                <li><a href="/Procedure" class="link-dark rounded">Add Procedure</a></li>
-                                <li><a href="/Complication" class="link-dark rounded">Add Complication</a></li>
+                                <li><a href="/Clinic" class="link-dark rounded" style="color:white">Add Clinic</a></li>
+                                <li><a href="/Surgeon" class="link-dark rounded" style="color:white">Add Surgeon</a></li>
+                                <li><a href="/Procedure" class="link-dark rounded" style="color:white">Add Procedure</a></li>
+                                <li><a href="/Complication" class="link-dark rounded" style="color:white">Add Complication</a></li>
                             </ul>
                         </div>
                     </li>
+
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false" style="color:white">
                             Generate Report
                         </button>
                         @*  <div class="collapse" id="orders-collapse">
@@ -83,7 +84,7 @@
                     </li>
                     <li class="border-top my-3"></li>
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false" style="color:white">
                             Logout
                         </button>
                         @*  <div class="collapse" id="account-collapse">
