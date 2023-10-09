@@ -1,60 +1,119 @@
 ﻿<!DOCTYPE html>
-<html>
-@* <head>
+<html lang="en">
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AppName</title>
+    <title>@ViewData["Title"] - TMSS Admin</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/sidebars.css" rel="stylesheet" />
+    @*   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/TMSS.Web.styles.css" asp-append-version="true" / >*@
+    <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+    @* <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" /> *@
+    <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
+    @* <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" /> *@
+    
 
-   
-</head> *@
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>@ViewData["Title"] - TMSS</title>
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-<link rel="stylesheet" href="~/TMSS.Web.styles.css" asp-append-version="true" />
-<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-<link href="~/css/style.css" rel="stylesheet" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+
+        @@media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+    </style>
 </head>
 <body>
-    @* <link rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css'
-          media="screen" /> *@
-   @*  <div class="navbar navbar-default">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1"
-                        aria-expanded="false">
-                    <span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" style="color:blue">Welcome Admin</a>
-            </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <div id="Menu1">
-                    <ul class="nav navbar-nav">
-                          <li>
-                            <a class="popout" href="#">Settings</a>
-                            <ul class="level2 dropdown-menu">
-                                <li><a class="" href="/Clinic">Add Clinic</a></li>
-                                <li><a class="" href="/Procedure">Add Procedure</a></li>
-                                <li><a class="" href="/Surgeon">Add Surgeon</a></li>
-                                <li><a class="" href="/Complication">Add Complication</a></li>
+    <div class="container-fluid">
+        <div class="row flex-nowrap">
+            @*   <div class="d-flex flex-column flex-shrink-0 p-3 bg-light" style="width:20%;"> *@
+            <div class="flex-shrink-0 p-3 bg-white" style="width:20%;">
+                <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+                    <svg class="bi me-2" width="30" height="24"><use xlink:href="#bootstrap"></use></svg>
+                    <span class="fs-5 fw-semibold">Collapsible</span>
+                </a>
+                <ul class="list-unstyled ps-0">
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                            Add Incident
+                        </button>
+                        @*  <div class="collapse" id="home-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-dark rounded">Overview</a></li>
+                        <li><a href="#" class="link-dark rounded">Updates</a></li>
+                        <li><a href="#" class="link-dark rounded">Reports</a></li>
+                        </ul>
+                        </div> *@
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                            Settings
+                        </button>
+                        <div class="collapse" id="dashboard-collapse" style="">
+                            <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                <li><a href="/Clinic" class="link-dark rounded">Add Clinic</a></li>
+                                <li><a href="/Surgeon" class="link-dark rounded">Add Surgeon</a></li>
+                                <li><a href="/Procedure" class="link-dark rounded">Add Procedure</a></li>
+                                <li><a href="/Complication" class="link-dark rounded">Add Complication</a></li>
                             </ul>
-                        </li>
-                        <li>
-                            <a class="" href="/Incident">Add Incident</a>
-                            
-                        </li>
-                        <li><a class="selected" href="/GenerateReport">Generate Report</a></li>
-                        <li><a href="/Home/Index">Logout</a></li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                            Generate Report
+                        </button>
+                        @*  <div class="collapse" id="orders-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-dark rounded">New</a></li>
+                        <li><a href="#" class="link-dark rounded">Processed</a></li>
+                        <li><a href="#" class="link-dark rounded">Shipped</a></li>
+                        <li><a href="#" class="link-dark rounded">Returned</a></li>
+                        </ul>
+                        </div> *@
+                    </li>
+                    <li class="border-top my-3"></li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                            Logout
+                        </button>
+                        @*  <div class="collapse" id="account-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-dark rounded">New...</a></li>
+                        <li><a href="#" class="link-dark rounded">Profile</a></li>
+                        <li><a href="#" class="link-dark rounded">Settings</a></li>
+                        <li><a href="#" class="link-dark rounded">Sign out</a></li>
+                        </ul>
+                        </div> *@
+                    </li>
+                </ul>
             </div>
+
+       
+        <div class="col py-3">
+            @RenderBody()
+        </div>
         </div>
     </div>
-    <script type="text/javascript" src='https://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.8.3.min.js'></script>
-    <script type="text/javascript" src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.0.3/js/bootstrap.min.js'></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+   @*  <script src="~/lib/jquery/dist/jquery.js"></script> *@
+    <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+  @*   <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script> *@
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+  @*   <script src="~/lib/font-awesome/js/all.min.js"></script> *@
+  @*   <script src="~/lib/font-awesome/js/all.js"></script> *@
+
     <script type="text/javascript">
         $(function () {
             //Remove the style attributes.
@@ -70,18 +129,8 @@
             $("a.selected").closest("li").addClass("active");
             $("a.selected").closest(".dropdown-toggle").addClass("active");
         });
-    </script> *@
-    <div>
-        @RenderBody()
-    </div>
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - TMSS.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
