@@ -1,20 +1,51 @@
-﻿using TMSS.Domain.Entities;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using TMSS.DataAccess.DataContext;
+using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
 
 namespace TMSS.Infrastructure.Persistance.Repositories
 {
-    public class ProcedureRepository : BaseRepository, IProcedureRepository
+    public class ProcedureRepository : IProcedureRepository
     {
-        public ProcedureRepository()
+        public TMSSDbContext _tMSSDbContext { get; set; }
+        private readonly IMapper _mapper;
+        public ProcedureRepository(TMSSDbContext tMSSDbContext, IMapper mapper)
         {
+            _tMSSDbContext = tMSSDbContext;
+            _mapper = mapper;
+        }
+
+        public async Task<IEnumerable<ProceduresClinic>> GetProcedures()
+        {
+            
+          return await _tMSSDbContext.ProceduresClinic.ToListAsync();
+        }
+        public ProceduresClinic CreateProcedure(ProceduresClinic procedure)
+        {
+            var _procedure = _tMSSDbContext.ProceduresClinic.Add(procedure);
+            if (_procedure.Context.SaveChanges() == 1)
+                return _procedure.Entity;
+            else
+                return new ProceduresClinic();
 
         }
-        public async Task<IEnumerable<Procedure>> GetProcedures()
+        public ProceduresClinic ModifyProcedures(ProceduresClinic procedureclinic)
         {
-            List<Procedure> procedures = new List<Procedure>();
-            procedures.Add(new Procedure() { ProcedureId = 1, ProcedureName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
-           // return await _tmssDbContext.Procedure.ToListAsync();
-           return procedures;
+            var existingProcedure = _tMSSDbContext.ProceduresClinic.FirstOrDefault(u => u.ProcedureId == procedureclinic.ProcedureId);
+            if (existingProcedure != null)
+            {
+                existingProcedure.ProcedureName = procedureclinic.ProcedureName;
+                existingProcedure.ClinicId = procedureclinic.ClinicId;
+                existingProcedure.ModifiedDate = DateTime.Now;
+                existingProcedure.ModifiedBy = "admin";
+                var _proclinic = _tMSSDbContext.ProceduresClinic.Update(existingProcedure);
+                if (_proclinic.Context.SaveChanges() == 1)
+                    return _proclinic.Entity;
+            }
+
+            return new ProceduresClinic();
         }
+
     }
 }

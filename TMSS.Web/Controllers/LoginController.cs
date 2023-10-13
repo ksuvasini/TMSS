@@ -26,29 +26,48 @@ namespace TMSSDemo.Controllers
         {
             return View();
         }
+        public IActionResult SomeAction()
+        {
+            // Custom error message
+            ModelState.AddModelError("CustomError", "Invalid Credentials");
+
+            return View();
+        }
         [HttpPost]
         public IActionResult Index([Bind] LoginViewModel loginViewModel)
         {
             LoginViewModel userDetails = _mapper.Map<LoginViewModel>(_loginService.IsAuthenticated(_mapper.Map<UserDto>(loginViewModel)));
-            if (userDetails == null) throw new Exception("Invalid Credentials");
-            if (userDetails.IsAuthenticated)
+            if (userDetails == null)
             {
-                if (!userDetails.UserRoles.Any())
-                    throw new Exception("Roles are not assigned to User");
-                if (userDetails.UserRoles.Any(jj =>
+                ModelState.AddModelError("", "Invalid credentials. Please try again.");
+
+                // SomeAction();
+                //throw new Exception("Invalid Credentials");
+
+            }
+            else if (userDetails.IsAuthenticated)
+            {
+                //if (!userDetails.UserRoles.Any())
+                //    throw new Exception("Roles are not assigned to User");
+                //if (userDetails.UserRoles.Any(jj =>
+                //{
+                //    return jj.RoleName == RoleTypeCode.User.ToString();
+                //}))
+                //{
+                //    return RedirectToAction("Index", "User");
+                //}
+                //else if (userDetails.UserRoles.Any(jj => jj.RoleName == RoleTypeCode.User.ToString()))
+                //{
+                //    return RedirectToAction("Index", "User");
+                //}
+                if (userDetails.UserName == "admin")
                 {
-                    return jj.RoleName == RoleTypeCode.User.ToString();
-                }))
-                {
-                    return RedirectToAction("Index", "User");
-                }
-                else if (userDetails.UserRoles.Any(jj => jj.RoleName == RoleTypeCode.User.ToString()))
-                {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Index", "Admin");
                 }
                 else
                 {
-                    return View();
+                    return RedirectToAction("Index", "User");
+
                 }
             }
             //if (!userDetails.Any())

@@ -7,6 +7,6 @@ namespace TMSS.Web.Models
         public int UserRoleId { get; set; }
         public int RoleId { get; set; }
         public int UserId { get; set; }
-        public string RoleName { get; set; }
+        public string? RoleName { get; set; }
     }
 }

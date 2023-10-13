@@ -1,35 +1,46 @@
-﻿@model TMSS.Web.Models.ClinicViewModel
+﻿@model IEnumerable<TMSS.Domain.Entities.Clinic>
 
 @{
-    ViewData["Title"] = "Add Clinic";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h3>Add Clinic</h3>
+<h1>Index</h1>
 
-<div class="container">
-<div class="row">
-    <div class="col-md-9">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-            <div class="form-group">
-                <label asp-for="ClinicName" class="control-label"></label>
-                <input asp-for="ClinicName" class="form-control" />
-                <span asp-validation-for="ClinicName" class="text-danger"></span>
-                
-            </div>
-            <div class="form-group">
-                <label asp-for="ClinicLocation" class="control-label"></label>
-                <input asp-for="ClinicLocation" class="form-control" type="password" />
-                <span asp-validation-for="ClinicLocation" class="text-danger"></span>
-            </div>
-                       <div class="form-group">
-                <input type="submit" value="Save Clinic Details" class="btn btn-primary" />
-            </div>
-            <b>@ViewBag.message</b>
-        </form>
-    </div>
-</div>
-</div>
-
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @*                 @Html.DisplayNameFor(model => model.ClinicName)
+                *@
+                Clinic Name
+            </th>
+            <th>
+                @*                 @Html.DisplayNameFor(model => model.ClinicLocation)
+                *@
+                Clinic Location
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ClinicLocation)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ClinicId">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ClinicId">Details</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

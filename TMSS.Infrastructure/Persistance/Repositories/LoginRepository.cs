@@ -3,6 +3,7 @@ using TMSS.DataAccess.DataContext;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Interfaces;
 
+
 namespace TMSS.Infrastructure.Persistance.Repositories
 {
     public class LoginRepository : ILoginRepository
@@ -32,6 +33,11 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             if (userDetails != null)
             {
                 userDetails.IsAuthenticated = true;
+            }
+            else
+            {
+
+
             }
             return userDetails;
         }

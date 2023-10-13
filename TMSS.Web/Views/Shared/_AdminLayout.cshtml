@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - TMSS Admin</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-  @*   <link href="~/css/sidebars.css" rel="stylesheet" /> *@
+    @*   <link href="~/css/sidebars.css" rel="stylesheet" /> *@
     @*   <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TMSS.Web.styles.css" asp-append-version="true" / >*@
     <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
@@ -13,7 +13,7 @@
     @* <link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" /> *@
     <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" />
     @* <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" /> *@
-    
+
 
     <style>
         .bd-placeholder-img {
@@ -24,9 +24,8 @@
             user-select: none;
         }
 
-        .btn-check:focus + .btn, .btn:focus
-        {
-            box-shadow:none !important;
+        .btn-check:focus + .btn, .btn:focus {
+            box-shadow: none !important;
         }
 
         @@media (min-width: 768px) {
@@ -49,19 +48,12 @@
                 <ul class="list-unstyled ps-0">
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false" style="color:white">
-                            Add Incident
+                            Home
                         </button>
-                        @*  <div class="collapse" id="home-collapse" style="">
-                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" class="link-dark rounded">Overview</a></li>
-                        <li><a href="#" class="link-dark rounded">Updates</a></li>
-                        <li><a href="#" class="link-dark rounded">Reports</a></li>
-                        </ul>
-                        </div> *@
                     </li>
                     <li class="mb-1">
                         <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false" style="color:white">
-                            Settings
+                            Add Settings
                         </button>
                         <div class="collapse" id="dashboard-collapse" style="">
                             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small" style="padding-left:9% !important;">
@@ -72,9 +64,35 @@
                             </ul>
                         </div>
                     </li>
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" onclick="window.location.href='/Incident'" aria-expanded="false" style="color:white">
+                            Add Incident
+                        </button>
+                       
+                    </li>
+                        @*  <div class="collapse" id="home-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-dark rounded">Overview</a></li>
+                        <li><a href="#" class="link-dark rounded">Updates</a></li>
+                        <li><a href="#" class="link-dark rounded">Reports</a></li>
+                        </ul>
+                        </div> *@
+                    
+                    <li class="mb-1">
+                        <button class="btn btn-toggle align-items-center rounded collapsed"  data-bs-toggle="collapse" onclick="window.location.href='/ManageUser'" data-bs-target="#home-collapse" aria-expanded="false" style="color:white">
+                            Manage User
+                        </button>
+                        @*  <div class="collapse" id="home-collapse" style="">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="#" class="link-dark rounded">Overview</a></li>
+                        <li><a href="#" class="link-dark rounded">Updates</a></li>
+                        <li><a href="#" class="link-dark rounded">Reports</a></li>
+                        </ul>
+                        </div> *@
+                    </li>
 
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false" style="color:white">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" onclick="window.location.href='/GenerateReport'" data-bs-target="#orders-collapse" aria-expanded="false" style="color:white">
                             Generate Report
                         </button>
                         @*  <div class="collapse" id="orders-collapse">
@@ -88,7 +106,7 @@
                     </li>
                     <li class="border-top my-3"></li>
                     <li class="mb-1">
-                        <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false" style="color:white">
+                        <button class="btn btn-toggle align-items-center rounded collapsed" onclick="window.location.href='/Login/Index'" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false" style="color:white">
                             Logout
                         </button>
                         @*  <div class="collapse" id="account-collapse">
@@ -105,19 +123,19 @@
 
 
             <div class="col py-3" style="margin-left: 20%; padding: 0px 10px;">
-            @RenderBody()
-        </div>
+                @RenderBody()
+            </div>
         </div>
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-   @*  <script src="~/lib/jquery/dist/jquery.js"></script> *@
+    @*  <script src="~/lib/jquery/dist/jquery.js"></script> *@
     <script src="~/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-  @*   <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script> *@
+    @*   <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script> *@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
-  @*   <script src="~/lib/font-awesome/js/all.min.js"></script> *@
-  @*   <script src="~/lib/font-awesome/js/all.js"></script> *@
+    @*   <script src="~/lib/font-awesome/js/all.min.js"></script> *@
+    @*   <script src="~/lib/font-awesome/js/all.js"></script> *@
 
     <script type="text/javascript">
         $(function () {
