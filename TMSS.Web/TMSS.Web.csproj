@@ -19,8 +19,4 @@
     <ProjectReference Include="..\TMSS.Services\TMSS.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Surgeon\" />
-  </ItemGroup>
-
 </Project>

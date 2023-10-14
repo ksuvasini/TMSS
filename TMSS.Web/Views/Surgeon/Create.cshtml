@@ -1,0 +1,142 @@
+﻿@model TMSS.Domain.Entities.Surgeon
+
+
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Add Surgeon</h4>
+<hr />
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+</head>
+<body>
+    @using (Html.BeginForm("Create", "Surgeon", FormMethod.Post))
+    {
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="SurgeonFirstName" class="control-label"></label>
+                        <input asp-for="SurgeonFirstName" class="form-control" />
+                        <span asp-validation-for="SurgeonFirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SurgeonLastName" class="control-label"></label>
+                        <input asp-for="SurgeonLastName" class="form-control" />
+                        <span asp-validation-for="SurgeonLastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Speciality" class="control-label"></label>
+                        <input asp-for="Speciality" class="form-control" />
+                        <span asp-validation-for="Speciality" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DatePPGranted" class="control-label"></label>
+                        <input asp-for="DatePPGranted" class="form-control" />
+                        <span asp-validation-for="DatePPGranted" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DateStartedFirstCase" class="control-label"></label>
+                        <input asp-for="DateStartedFirstCase" class="form-control" />
+                        <span asp-validation-for="DateStartedFirstCase" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ALSDate" class="control-label"></label>
+                        <input asp-for="ALSDate" class="form-control" />
+                        <span asp-validation-for="ALSDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        @*  <label asp-for="ProcedureId" class="control-label">Procedure Name</label>
+                    <select asp-for="ProcedureId" asp-items="@(new SelectList(ViewBag.ProceduresClinic,"ProcedureId","ProcedureName"))" aria-label="Select Procedure">
+                    <option disabled selected>--- Select Procedure ---</option>
+                    </select>
+                    <span asp-validation-for="ProcedureId" class="text-danger"></span> *@
+                        @* @Html.DropDownListFor(m => m.ProcedureId, Model.ProceduresClinic, "Please select", new { onchange = "document.forms[0].submit();" }) *@
+                        @Html.DropDownListFor(m => m.ProcedureId, (IEnumerable<SelectListItem>)ViewBag.ProceduresClinic, "Select a Procedure", new { id = "procedureDropdownId",@onchange="onChangeFunction()" })
+
+
+
+                    </div>
+                    <div class="form-group">
+                        @* <label asp-for="ClinicId" class="control-label">Clinic Name</label>
+                    <select asp-for="ClinicId" asp-items="@(new SelectList(ViewBag.Clinics,"ClinicId","ClinicName"))" aria-label="Select Clinic">
+                    <option disabled selected>--- Select Clinic ---</option>
+                    </select>
+                    <span asp-validation-for="ClinicId" class="text-danger"></span> *@
+                        @*  @Html.DropDownListFor(m => m.ClinicId, Model.Clinic, "Please select", new { onchange = "document.forms[0].submit();", disabled = "disabled" })*@
+                        @Html.DropDownListFor(m => m.ClinicId, (IEnumerable<SelectListItem>)ViewBag.Clinic, "Select a Clinic", new { id = "clinicDropdownId" })
+
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    }
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // function onChangeFunction() {
+            //     debugger;
+            //     var selectedClinic = $(this).val();
+            //     if (selectedClinic !== "") {
+            //         $.ajax({
+            //             url: '@Url.Action("GetProcedures", "SurgeonController"),
+            //             data: { ClinicId: selectedClinic },
+            //             type: 'POST',
+            //             success: function (data) {
+            //                 var productsDropdown = $('#procedureDropdown');
+            //                 productsDropdown.empty();
+            //                 $.each(data, function (i, procedure) {
+            //                     productsDropdown.append($('<option></option>').val(procedure.Value).text(procedure.Text));
+            //                 });
+            //             }
+            //         });
+            //     }
+            // });
+        });
+        function onChangeFunction() {
+            var selectedProcedureId = $("#procedureDropdownId :selected").text();
+            $.ajax({
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: '/Surgeon/GetClinicbyProcedure',
+                data: { ProcedureName: selectedProcedureId },
+                type: 'GET',
+                success: function (data) {
+                    var clinicDropdown = $('#clinicDropdownId');
+                    clinicDropdown.empty();
+                    var clinics = JSON.stringify(data);
+                   var stringify = JSON.parse(clinics);
+                    $.each(data, function (i, clinicresult) {
+                        
+                       // $('#clinicDropdownId').append($('<option></option>').val(this.ClinicId).text(this.ClinicName);
+                       // alert(this.ClinicId)
+                        $("#clinicDropdownId").append($('<option></option>').val(clinicresult.clinicId).text(clinicresult.clinicName));
+                    });
+
+
+                   
+            }
+            });
+        }
+    </script>
+</body>
+</html>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+

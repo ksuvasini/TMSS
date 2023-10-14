@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<TMSS.Domain.Entities.Clinic>
 
-@{
+
+    @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -10,6 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -44,3 +46,5 @@
         }
     </tbody>
 </table>
+}
+   

@@ -21,6 +21,9 @@ namespace TMSS.DataAccess.DataContext
         public virtual DbSet<Clinic> Clinic { get; set; }
         public virtual DbSet<Complication> Complication { get; set; }
         public virtual DbSet<User> User { get; set; }
+
+        public virtual DbSet<Surgeon> Surgeon { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

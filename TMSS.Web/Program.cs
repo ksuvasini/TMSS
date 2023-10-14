@@ -30,6 +30,8 @@ builder.Services.AddScoped<IClinicRepository, ClinicRepository>();
 builder.Services.AddScoped<IClinicService, ClinicService>();
 builder.Services.AddScoped<IComplicationRepository, ComplicationRepository>();
 builder.Services.AddScoped<IComplicationService, ComplicationService>();
+builder.Services.AddScoped<ISurgeonRepository, SurgeonRepository>();
+builder.Services.AddScoped<ISurgeonService, SurgeonService>();
 
 var app = builder.Build();
 

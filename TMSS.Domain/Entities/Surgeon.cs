@@ -5,14 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TMSS.Domain.Entities
 {
     public class Surgeon : BaseEntity
     {
-        public Surgeon()
-        {
-            // this.Clinics = new HashSet<Clinic>();
-        }
+       
         [Key]
         public int SurgeonId { get; set; }
         public string? SurgeonFirstName { get; set; }
@@ -23,8 +21,8 @@ namespace TMSS.Domain.Entities
         public DateTime? ALSDate { get; set; }
         public int ProcedureId { get; set; }
         public int ClinicId { get; set; }
-
-
+        //public ProceduresClinic ProceduresClinic { get; set; }
+        //public Clinic Clinic { get; set; }
 
     }
 }

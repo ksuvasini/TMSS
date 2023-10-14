@@ -1,0 +1,77 @@
+﻿@model List<TMSS.Web.Models.SurgeonViewModel>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Surgeon Details</h4>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                SurgeonFirstName
+            </th>
+            <th>
+                SurgeonLastName
+            </th>
+            <th>
+                Speciality
+            </th>
+            <th>
+               DatePPGranted
+            </th>
+            <th>
+               DateStartedFirstCase
+            </th>
+            <th>
+               ALSDate
+            </th>
+            <th>
+              Procedure
+            </th>
+            <th>
+              Clinic
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurgeonFirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SurgeonLastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Speciality)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatePPGranted)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateStartedFirstCase)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ALSDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProcedureName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClinicName)
+            </td>
+           
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.SurgeonId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.SurgeonId">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
