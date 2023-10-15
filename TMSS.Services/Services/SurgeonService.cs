@@ -29,7 +29,10 @@ namespace TMSS.Services.Services
         {
             return _mapper.Map<Surgeon>(_surgeonRepository.CreateSurgeon(surgeon));
         }
-
+        public Surgeon ModifySurgeon(Surgeon surgeon)
+        {
+            return _mapper.Map<Surgeon>(_surgeonRepository.ModifySurgeon(surgeon));
+        }
 
     }
 }

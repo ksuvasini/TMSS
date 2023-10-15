@@ -34,6 +34,28 @@ namespace TMSS.Infrastructure.Persistance.Repositories
                 return new Surgeon();
 
         }
+        public Surgeon ModifySurgeon(Surgeon surgeon)
+        {
+            var existingSurgeon = _tMSSDbContext.Surgeon.FirstOrDefault(u => u.SurgeonId == surgeon.SurgeonId);
+            if (existingSurgeon != null)
+            {
+                existingSurgeon.SurgeonFirstName = surgeon.SurgeonFirstName;
+                existingSurgeon.SurgeonLastName = surgeon.SurgeonLastName;
+                existingSurgeon.Speciality = surgeon.Speciality;
+                existingSurgeon.ALSDate = surgeon.ALSDate;
+                existingSurgeon.DatePPGranted = surgeon.DatePPGranted;
+                existingSurgeon.DateStartedFirstCase = surgeon.DateStartedFirstCase;
+                existingSurgeon.ProcedureId = surgeon.ProcedureId;
+                existingSurgeon.ClinicId = surgeon.ClinicId;
+                existingSurgeon.ModifiedDate = DateTime.Now;
+                existingSurgeon.ModifiedBy = "admin";
+                var _surgeon = _tMSSDbContext.Surgeon.Update(existingSurgeon);
+                if (_surgeon.Context.SaveChanges() == 1)
+                    return _surgeon.Entity;
+            }
+
+            return new Surgeon();
+        }
 
     }
 }

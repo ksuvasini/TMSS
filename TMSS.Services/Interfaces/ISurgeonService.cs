@@ -11,5 +11,7 @@ namespace TMSS.Services.Interfaces
     {
         Task<IEnumerable<Surgeon>> GetSurgeon();
         Surgeon CreateSurgeon(Surgeon surgeon);
+        Surgeon ModifySurgeon(Surgeon surgeon);
+
     }
 }

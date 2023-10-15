@@ -1,0 +1,66 @@
+﻿@model TMSS.Domain.Entities.Surgeon
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h4>Edit Details</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SurgeonId" />
+            <div class="form-group">
+                <label asp-for="SurgeonFirstName" class="control-label"></label>
+                <input asp-for="SurgeonFirstName" class="form-control" />
+                <span asp-validation-for="SurgeonFirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SurgeonLastName" class="control-label"></label>
+                <input asp-for="SurgeonLastName" class="form-control" />
+                <span asp-validation-for="SurgeonLastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Speciality" class="control-label"></label>
+                <input asp-for="Speciality" class="form-control" />
+                <span asp-validation-for="Speciality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatePPGranted" class="control-label"></label>
+                <input asp-for="DatePPGranted" class="form-control" />
+                <span asp-validation-for="DatePPGranted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateStartedFirstCase" class="control-label"></label>
+                <input asp-for="DateStartedFirstCase" class="form-control" />
+                <span asp-validation-for="DateStartedFirstCase" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ALSDate" class="control-label"></label>
+                <input asp-for="ALSDate" class="form-control" />
+                <span asp-validation-for="ALSDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProcedureId" class="control-label"></label>
+                <input asp-for="ProcedureId" class="form-control" />
+                <span asp-validation-for="ProcedureId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClinicId" class="control-label"></label>
+                <input asp-for="ClinicId" class="form-control" />
+                <span asp-validation-for="ClinicId" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
