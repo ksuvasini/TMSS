@@ -9,69 +9,89 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                SurgeonFirstName
-            </th>
-            <th>
-                SurgeonLastName
-            </th>
-            <th>
-                Speciality
-            </th>
-            <th>
-               DatePPGranted
-            </th>
-            <th>
-               DateStartedFirstCase
-            </th>
-            <th>
-               ALSDate
-            </th>
-            <th>
-              Procedure
-            </th>
-            <th>
-              Clinic
-            </th>
-           
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SurgeonFirstName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SurgeonLastName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Speciality)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DatePPGranted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DateStartedFirstCase)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ALSDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProcedureName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ClinicName)
-            </td>
-           
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.SurgeonId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.SurgeonId">Details</a> |
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table In HTML</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        SurgeonFirstName
+                    </th>
+                    <th>
+                        SurgeonLastName
+                    </th>
+                    <th>
+                        Speciality
+                    </th>
+                    <th>
+                        DatePPGranted
+                    </th>
+                    <th>
+                        DateStartedFirstCase
+                    </th>
+                    <th>
+                        ALSDate
+                    </th>
+                    <th>
+                        Procedure
+                    </th>
+                    <th>
+                        Clinic
+                    </th>
+                    <th>
+
+                    </th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SurgeonFirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SurgeonLastName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Speciality)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatePPGranted)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DateStartedFirstCase)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ALSDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProcedureName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ClinicName)
+                        </td>
+
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.SurgeonId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.SurgeonId">Details</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

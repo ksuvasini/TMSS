@@ -5,67 +5,90 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h1>Index</h1>
+<h4>User Details</h4>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.UserName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Password)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.EmailID)
-            </th>
-           @*  <th>
-                @Html.DisplayNameFor(model => model.CreatedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CreatedBy)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ModifiedBy)
-            </th>
-            <th></th> *@
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Password)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EmailID)
-            </td>
-            @* <td>
-                @Html.DisplayFor(modelItem => item.CreatedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreatedBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ModifiedBy)
-            </td> *@
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table In HTML</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="container">
+
+        <table style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        User Name
+                    </th>
+                    <th>
+                        Password
+                    </th>
+                    <th>
+                        Email ID
+                    </th>
+                    <th>
+
+                    </th>
+                    @*  <th>
+                    @Html.DisplayNameFor(model => model.CreatedDate)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.CreatedBy)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.ModifiedDate)
+                    </th>
+                    <th>
+                    @Html.DisplayNameFor(model => model.ModifiedBy)
+                    </th>
+                    <th></th> *@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Password)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailID)
+                        </td>
+                        @* <td>
+                    @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedDate)
+                    </td>
+                    <td>
+                    @Html.DisplayFor(modelItem => item.ModifiedBy)
+                    </td> *@
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.UserId">Details</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

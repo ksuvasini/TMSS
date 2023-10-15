@@ -10,26 +10,46 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.ComplicationName)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ComplicationName)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ComplicationId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ComplicationId">Details</a> |
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Table In HTML</title>
+
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <table style="width:100%;">
+
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ComplicationName)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ComplicationName)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.ComplicationId">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.ComplicationId">Details</a> |
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
