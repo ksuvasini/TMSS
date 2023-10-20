@@ -1,4 +1,5 @@
-﻿@model TMSS.Domain.Entities.ProceduresClinic
+﻿@model TMSS.Web.Models.ProcedureAndClinicDetails
+
 
 @{
     ViewData["Title"] = "Create";
@@ -7,34 +8,136 @@
 
 <h1>Add Procedure</h1>
 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MultiSelect DropDownList Binding</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Multi-Select-List-with-Checkboxes-MultiSelect/jquery.multiselect.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProcedureName" class="control-label">Procedure Name</label>
-                <input asp-for="ProcedureName" class="form-control" />
-                <span asp-validation-for="ProcedureName" class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <label class="control-label">Clinic</label>
-                <select asp-for="ClinicId" asp-items="@(new SelectList(ViewBag.Clinics,"ClinicId","ClinicName"))" aria-label="Select Clinic">
-                    <option disabled selected>--- Select Clinic ---</option>
-                </select>
-                <span class="text-danger"></span>
-            </div>
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+    <script src="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Multi-Select-List-with-Checkboxes-MultiSelect/jquery.multiselect.js"></script>
+
+
+    <style>
+        body {
+            font-family: 'Open Sans' Arial, Helvetica, sans-serif
+        }
+
+        ul,
+        li {
+            margin: 0;
+            padding: 0;
+            list-style: nont;
+        }
+
+        .label {
+            color: #000;
+            font-size: 16px;
+        }
+
+        .container {
+            max-width: 100%;
+        }
+    </style>
+    <style>
+        .successfully-saved {
+            display: none;
+            color: #1B7C18;
+            border-radius: 5px;
+            border: 2px solid #1B7C18;
+            padding: .5em .75em;
+            background: #D6F8DD;
+            width: 100%;
+            margin-top: 20px;
+            &.show
+
+        {
+            display: block;
+        }
+
+    </style>
+
+
+
+</head>
+<body>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="container">
+                    <div class="form-group">
+                        <label asp-for="ProcedureName" class="control-label">Procedure Name</label>
+                        <input asp-for="ProcedureName" id="ProcId" class="form-control" />
+                        <span asp-validation-for="ProcedureName" class="text-danger"></span>
+                    </div>
+                    <br />
+
+                    <div class="form-group">
+
+                        @Html.ListBoxFor(model => model.selectedClinicIds,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
+
+                    </div>
+
+
+                    <br />
+                                     
+                    <input type="submit" id="btnGetClinics" value="Create" onclick="fnCreateProcAndClinicDetails()" class="btn btn-primary" />
+                    <span class="successfully-saved"><i class="fa fa-thumbs-up"></i>Successfully Saved!</span>
+
+                    @*                     </div>
+                    *@              
+                    <div>
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
+    .
+    <script>
+        $("#selectedClinicIds").multiselect({
+            columns: 1,
+            placeholder: 'Select options'
+        });
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        function fnCreateProcAndClinicDetails() {
+            event.preventDefault();
+
+            var proceName = $("#ProcId").val();
+            var prodAndClinicModel = new Object();
+            var url = '@Url.Action("Create", "Procedure")';
+            prodAndClinicModel.ProcedureName = proceName;
+            prodAndClinicModel.selectedClinicIds = $("#selectedClinicIds").val();
+            //alert(prodAndClinicModel.selectedClinicIds);
+            $.ajax({
+                type: "post",
+                dataType: "json",
+                url: url,
+                data: prodAndClinicModel,
+                success: function (result) {
+                    if (result) {
+
+                        alert("successfully-saved");
+                    }
+                }
+            });
+            $(".successfully-saved").css("display", "block").delay(1000).fadeOut(1000);
+
+            var url1 = '@Url.Action("Index", "Procedure")';
+            window.location.href = url1;
+        }
+
+    </script>
+
+
+
+</body>
+</html>
+
+
 

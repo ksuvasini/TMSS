@@ -20,12 +20,25 @@ namespace TMSSDemo.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dbcontext = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchstring)
         {
             try
             {
-                IEnumerable<Complication> complications = await _Service.GetComplications();
-                return View(complications);
+                if (!String.IsNullOrEmpty(searchstring))
+                {
+                    IEnumerable<Complication> complications = await _Service.GetComplications();
+
+                    searchstring = searchstring.ToLower(); // Convert the search keyword to lowercase
+
+                    complications = complications
+               .Where(s => s.ComplicationName.ToLower().Contains(searchstring)).ToList();
+                    return View(complications.ToList());
+                }
+                else
+                {
+                    IEnumerable<Complication> complications = await _Service.GetComplications();
+                    return View(complications);
+                }
             }
             catch (Exception ex)
             {

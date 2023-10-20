@@ -9,7 +9,7 @@ namespace TMSS.Domain.Interfaces
 {
     public interface IClinicRepository
     {
-        Task<IEnumerable<Clinic>> GetClinics();
+        IEnumerable<Clinic> GetClinics();
         Clinic CreateClinic(Clinic clinic);
         Clinic ModifyClinic(Clinic clinic);
 

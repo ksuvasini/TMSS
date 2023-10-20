@@ -1,4 +1,4 @@
-﻿@model TMSS.Domain.Entities.ProceduresClinic
+﻿@model TMSS.Web.Models.ProcedureAndClinicDetails
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,12 +7,57 @@
 
 <h4>Edit Details</h4>
 <hr />
+<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<link href="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Multi-Select-List-with-Checkboxes-MultiSelect/jquery.multiselect.css" rel="stylesheet" type="text/css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<script src="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Multi-Select-List-with-Checkboxes-MultiSelect/jquery.multiselect.js"></script>
+
+
+<style>
+    body {
+        font-family: 'Open Sans' Arial, Helvetica, sans-serif
+    }
+
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: nont;
+    }
+
+    .label {
+        color: #000;
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+</style>
+<style>
+    .successfully-saved {
+        display: none;
+        color: #1B7C18;
+        border-radius: 5px;
+        border: 2px solid #1B7C18;
+        padding: .5em .75em;
+        background: #D6F8DD;
+        width: 100%;
+        margin-top: 20px;
+        &.show
+
+    {
+        display: block;
+    }
+
+</style>
 
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ProcedureId" />
+            <input type="hidden" asp-for="ProcedureId" id="Procedureids" />
             <table>
                 <tr>
                     <td>
@@ -20,20 +65,18 @@
 
                     </td>
                     <td>
-                        <div class="form-group">
-                            <input asp-for="ProcedureName" class="form-control" />
+                        <div class="
+">
+                            <input asp-for="ProcedureName" id="ProcId" class="form-control" />
                             <span asp-validation-for="ProcedureName" class="text-danger"></span>
                         </div>
                     </td>
                 </tr>
                 <tr>
-
                 </tr>
                 <tr>
-
                 </tr>
                 <tr>
-
                 </tr>
                 <tr>
                     <td>
@@ -42,24 +85,59 @@
                     </td>
                     <td>
                         <div class="form-group">
-                            <select asp-for="ClinicId" asp-items="@(new SelectList(ViewBag.Clinics,"ClinicId","ClinicName"))"></select>
-                            <span asp-validation-for="ClinicId" class="text-danger"></span>
+                            @Html.ListBoxFor(model => model.selectedClinicIds,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
+
                         </div>
                     </td>
 
-                </tr>               
+                </tr>
 
             </table>
-           
-            <br/>
-           
-            <br/>
-            <div class="form-group">
-                <input type="submit" value="Update" class="btn btn-primary" />
-            </div>
+
+            <br />
+
+            <br />
+            @*             <div class="form-group">*@
+            <input type="submit" value="Update" class="btn btn-primary" onclick="fnCreateProcAndClinicDetails()" />
+            <span class="successfully-saved"><i class="fa fa-thumbs-up"></i>Successfully Updated!</span>
         </form>
     </div>
 </div>
+<script>
+    $("#selectedClinicIds").multiselect({
+        columns: 1,
+        placeholder: 'Select options'
+    });
+
+    function fnCreateProcAndClinicDetails() {
+        event.preventDefault();
+        var proceids = $("#Procedureids").val();
+        var proceName = $("#ProcId").val();
+        var prodAndClinicModel = new Object();
+        var url = '@Url.Action("Edit", "Procedure")';
+        prodAndClinicModel.ProcedureId = proceids;
+        prodAndClinicModel.ProcedureName = proceName;
+        prodAndClinicModel.selectedClinicIds = $("#selectedClinicIds").val();
+        //alert(prodAndClinicModel.selectedClinicIds);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: url,
+            data: prodAndClinicModel,
+            success: function (result) {
+                if (result) {
+                    window.location.href = "/Procedure/Index";
+
+                }
+
+            }
+        });
+        $(".successfully-saved").css("display", "block").delay(1000).fadeOut(1000);
+
+    }
+
+</script>
+
 
 <div>
     <a asp-action="Index">Back to List</a>

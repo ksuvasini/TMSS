@@ -5,8 +5,8 @@ namespace TMSS.Domain.Interfaces
     public interface IProcedureRepository
     {
         Task<IEnumerable<ProceduresClinic>> GetProcedures();
-        ProceduresClinic CreateProcedure(ProceduresClinic procedure);
-        ProceduresClinic ModifyProcedures(ProceduresClinic procedureclinic);
+        ProceduresClinic CreateProcedure(List<ProceduresClinic> procedure);
+        ProceduresClinic ModifyProcedures(List<ProceduresClinic> procedureclinic);
 
     }
 }

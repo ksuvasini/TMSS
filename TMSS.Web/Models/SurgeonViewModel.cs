@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace TMSS.Web.Models
 {
@@ -15,8 +16,10 @@ namespace TMSS.Web.Models
         public int ProcedureId { get; set; }
         public int ClinicId { get; set; }
         public string ProcedureName { get; set; }
-
         public string ClinicName { get; set; }
+        public List<Microsoft.AspNetCore.Mvc.Rendering.SelectListItem> Clinics { get; set; }
+        public int[]? SelectedClinicIds { get; set; }
+       public List<SelectListItem> LstProcedures { get; set; }
 
     }
 }

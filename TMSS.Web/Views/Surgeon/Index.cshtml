@@ -9,6 +9,20 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form action="/Surgeon/Index" method="get">
+
+    <div class="input-group md-form form-sm form-2 p1-0">
+        <input name="searchstring" style="width:400px;align-items:end" type="text" placeholder="Search" />
+        <div class="input-group-btn">
+
+            <button class="btn btn-default" type="submit" onclick="fnSurgeonDetails()">
+                <i class="fas fa-search text-grey" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<br/>
+<br/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -92,6 +106,16 @@
                 }
             </tbody>
         </table>
+        @section scripts{
+            <script>
+                function fnSurgeonDetails() {
+                    alert(hi)
+                    $("Form").submit();
+
+                }
+            </script>
+        }
+
     </div>
 </body>
 </html>

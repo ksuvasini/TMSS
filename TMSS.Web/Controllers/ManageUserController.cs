@@ -28,12 +28,23 @@ namespace TMSS.Web.Controllers
             _dbcontext = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchstring)
         {
             try
             {
-                IEnumerable<User> users = await _Service.GetManageUsers();
-                return View(users);
+                if (!String.IsNullOrEmpty(searchstring))
+                {
+                    IEnumerable<User> users = await _Service.GetManageUsers();
+                    searchstring = searchstring.ToLower(); // Convert the search keyword to lowercase
+                    users = users
+               .Where(s => s.UserName.ToLower().Contains(searchstring) || s.Password.ToLower().Contains(searchstring) || s.EmailID.ToLower().Contains(searchstring)).ToList();
+                    return View(users.ToList());
+                }
+                else
+                {
+                    IEnumerable<User> users = await _Service.GetManageUsers();
+                    return View(users);
+                }
             }
             catch (Exception ex)
             {

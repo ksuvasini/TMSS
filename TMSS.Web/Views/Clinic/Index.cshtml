@@ -11,6 +11,31 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<form action="/Clinic/Index" method="get">
+
+<div class="input-group md-form form-sm form-2 p1-0">
+        <input name="searchstring" style="width:400px;align-items:end" type="text" placeholder="Search" />
+    <div class="input-group-btn">
+
+        <button class="btn btn-default" type="submit" onclick="fnClinicDetails()">
+            <i class="fas fa-search text-grey" aria-hidden="true"></i>
+        </button>
+    </div>
+</div>
+</form>
+
+@* <div class="input-group">
+    <input type="text" name="clinicname" class="form-control" placeholder="Search">
+    <div class="input-group-btn">
+        <button class="btn btn-default" type="submit" onclick="fnClinicDetails()">
+            <i class="glyphicon glyphicon-search"></i>
+        </button>
+    </div>
+</div>
+
+ *@
+<br />
+<br />
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +46,7 @@
             border-collapse: collapse;
         }
     </style>
+
 
 </head>
 <body>
@@ -57,10 +83,35 @@
                         </td>
                     </tr>
                 }
+
             </tbody>
         </table>
+
+       
+        @section scripts{
+            <script>
+                $(function () {
+                    alert(hi)
+                    $("btnclinicsearch").click(function () {
+                        $("Form").submit();
+                    })
+
+                });
+            </script>
+
+            <script>
+                function fnClinicDetails() {
+                    alert(hi)
+
+                    $("Form").submit();
+
+                }
+            </script>
+        }
+
     </div>
 </body>
 </html>
+
 
 

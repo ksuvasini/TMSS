@@ -4,6 +4,7 @@ using TMSS.DataAccess.DataContext;
 using TMSS.Domain.Entities;
 using TMSS.Services.Interfaces;
 using TMSS.Web.Controllers;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace TMSSDemo.Controllers
 {
@@ -21,19 +22,51 @@ namespace TMSSDemo.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dbcontext = context;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchstring)
         {
             try
             {
-                IEnumerable<Clinic> clinics = await _Service.GetClinics();
-                return View(clinics);
+                if (!String.IsNullOrEmpty(searchstring))
+                {
+                    IEnumerable<Clinic> clinics =  _Service.GetClinics();
+                    int pageSize = 3; // Number of items to display on each page
+
+
+                    using (var context = new TMSSDbContext())
+                    {
+                        searchstring = searchstring.ToLower(); // Convert the search keyword to lowercase
+
+                        clinics = clinics
+               .Where(s => s.ClinicName.ToLower().Contains(searchstring)
+                         || s.ClinicLocation.ToLower().Contains(searchstring));
+
+                     return View(clinics);
+
+                    }
+
+                    //searchstring = searchstring.ToLower(); // Convert the search keyword to lowercase
+
+                    //var products = context.Products
+                    //    .Where(p => SqlFunctions.PatIndex("%" + keyword + "%", p.Name.ToLower()) > 0)
+                    //    .ToList();
+
+                    //return View(products);
+                }
+                else
+                {
+
+                    IEnumerable<Clinic> clinics =  _Service.GetClinics();
+                    return View(clinics);
+                }
             }
             catch (Exception ex)
             {
                 // Handle exceptions appropriately (e.g., log the error)
-                return StatusCode(500, "An error occurred while fetching users.");
+                return StatusCode(500, "An error occurred while fetching clinics.");
             }
         }
+
+
         public IActionResult Create()
         {
             return View();
@@ -51,11 +84,11 @@ namespace TMSSDemo.Controllers
             else
                 return View();
 
-          //  return Ok(clinic);
+            //  return Ok(clinic);
         }
         public async Task<IActionResult> Edit(int id)
         {
-            IEnumerable<Clinic> clinics = await _Service.GetClinics();
+            IEnumerable<Clinic> clinics =  _Service.GetClinics();
 
             var _clinics = clinics.Where(c => c.ClinicId == id).FirstOrDefault();
             return View(_clinics);

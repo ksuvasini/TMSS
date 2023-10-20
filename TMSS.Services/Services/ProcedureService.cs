@@ -24,11 +24,11 @@ namespace TMSS.Services.Services
 
             //   throw new NotImplementedException();
         }
-        public ProceduresClinic CreateProcedure(ProceduresClinic procedure)
+        public ProceduresClinic CreateProcedure(List<ProceduresClinic> procedure)
         {
             return _mapper.Map<ProceduresClinic>(_procedureRepository.CreateProcedure(procedure));
         }
-        public ProceduresClinic ModifyProcedure(ProceduresClinic procedureclinic)
+        public ProceduresClinic ModifyProcedure(List<ProceduresClinic> procedureclinic)
         {
             return _mapper.Map<ProceduresClinic>(_procedureRepository.ModifyProcedures(procedureclinic));
         }

@@ -20,9 +20,9 @@ namespace TMSS.Services.Services
             _clinicRepository = clinicRepository;
         }
 
-        public async Task<IEnumerable<Clinic>> GetClinics()
+        public  IEnumerable<Clinic> GetClinics()
         {
-            return _mapper.Map<List<Clinic>>(await _clinicRepository.GetClinics());
+            return _mapper.Map<List<Clinic>>( _clinicRepository.GetClinics());
 
         }
 

@@ -21,8 +21,6 @@ namespace TMSS.Domain.Entities
         public DateTime? ALSDate { get; set; }
         public int ProcedureId { get; set; }
         public int ClinicId { get; set; }
-        //public ProceduresClinic ProceduresClinic { get; set; }
-        //public Clinic Clinic { get; set; }
-
     }
+    
 }

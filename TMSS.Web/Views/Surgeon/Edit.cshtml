@@ -12,7 +12,8 @@
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="SurgeonId" />
-            <div class="form-group">
+            <div class="
+">
                 <label asp-for="SurgeonFirstName" class="control-label"></label>
                 <input asp-for="SurgeonFirstName" class="form-control" />
                 <span asp-validation-for="SurgeonFirstName" class="text-danger"></span>
@@ -44,12 +45,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProcedureId" class="control-label"></label>
-                <input asp-for="ProcedureId" class="form-control" />
+                @Html.DropDownListFor(m => m.ProcedureId, (IEnumerable<SelectListItem>)ViewBag.ProceduresClinic, "Select a Procedure", new { id = "procedureDropdownId",@onchange="onChangeFunction()" })
                 <span asp-validation-for="ProcedureId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ClinicId" class="control-label"></label>
-                <input asp-for="ClinicId" class="form-control" />
+                @Html.DropDownListFor(m => m.ClinicId, (IEnumerable<SelectListItem>)ViewBag.Clinic, "Select a Clinic", new { id = "clinicDropdownId" })
                 <span asp-validation-for="ClinicId" class="text-danger"></span>
             </div>
             <br/>
@@ -59,6 +60,53 @@
         </form>
     </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // function onChangeFunction() {
+        //     debugger;
+        //     var selectedClinic = $(this).val();
+        //     if (selectedClinic !== "") {
+        //         $.ajax({
+        //             url: '@Url.Action("GetProcedures", "SurgeonController"),
+        //             data: { ClinicId: selectedClinic },
+        //             type: 'POST',
+        //             success: function (data) {
+        //                 var productsDropdown = $('#procedureDropdown');
+        //                 productsDropdown.empty();
+        //                 $.each(data, function (i, procedure) {
+        //                     productsDropdown.append($('<option></option>').val(procedure.Value).text(procedure.Text));
+        //                 });
+        //             }
+        //         });
+        //     }
+        // });
+    });
+    function onChangeFunction() {
+        var selectedProcedureId = $("#procedureDropdownId :selected").text();
+        $.ajax({
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            url: '/Surgeon/GetClinicbyProcedure',
+            data: { ProcedureName: selectedProcedureId },
+            type: 'GET',
+            success: function (data) {
+                var clinicDropdown = $('#clinicDropdownId');
+                clinicDropdown.empty();
+                var clinics = JSON.stringify(data);
+                var stringify = JSON.parse(clinics);
+                $.each(data, function (i, clinicresult) {
+
+                    // $('#clinicDropdownId').append($('<option></option>').val(this.ClinicId).text(this.ClinicName);
+                    // alert(this.ClinicId)
+                    $("#clinicDropdownId").append($('<option></option>').val(clinicresult.clinicId).text(clinicresult.clinicName));
+                });
+
+
+
+            }
+        });
+    }
+</script>
 
 <div>
     <a asp-action="Index">Back to List</a>

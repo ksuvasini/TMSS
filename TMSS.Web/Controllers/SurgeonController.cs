@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Humanizer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
@@ -30,33 +31,67 @@ namespace TMSSDemo.Controllers
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _dbcontext = context;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchstring)
         {
             try
             {
-                var surgeon = _dbcontext.Surgeon.ToList();
-                SurgeonViewModel surgeonmodel = new SurgeonViewModel();
-                List<SurgeonViewModel> lstsurgeon = new();
-                foreach (var _surgeon in surgeon)
+                if (!String.IsNullOrEmpty(searchstring))
                 {
-                    surgeonmodel = new SurgeonViewModel();
-                    surgeonmodel.SurgeonId = _surgeon.SurgeonId;
-                    surgeonmodel.ProcedureName = _dbcontext.ProceduresClinic.Where(x => x.ProcedureId == _surgeon.ProcedureId).Select(x => x.ProcedureName).FirstOrDefault();
-                    surgeonmodel.ProcedureId = _surgeon.ProcedureId;
-                    surgeonmodel.ClinicId = _surgeon.ClinicId;
-                    surgeonmodel.ClinicName = _dbcontext.Clinic.Where(x => x.ClinicId == _surgeon.ClinicId).Select(x => x.ClinicName).FirstOrDefault();
-                    surgeonmodel.SurgeonFirstName = _surgeon.SurgeonFirstName;
-                    surgeonmodel.SurgeonLastName = _surgeon.SurgeonLastName;
-                    surgeonmodel.Speciality = _surgeon.Speciality;
-                    surgeonmodel.ALSDate = _surgeon.ALSDate;
-                    surgeonmodel.DatePPGranted = _surgeon.DatePPGranted;
-                    surgeonmodel.DateStartedFirstCase = _surgeon.DateStartedFirstCase;
+                    var surgeon = _dbcontext.Surgeon.ToList();
+                    SurgeonViewModel surgeonmodel = new SurgeonViewModel();
+                    List<SurgeonViewModel> lstsurgeon = new();
+                    foreach (var _surgeon in surgeon)
+                    {
+                        surgeonmodel = new SurgeonViewModel();
+                        surgeonmodel.SurgeonId = _surgeon.SurgeonId;
+                        surgeonmodel.ProcedureName = _dbcontext.ProceduresClinic.Where(x => x.ProcedureId == _surgeon.ProcedureId).Select(x => x.ProcedureName).FirstOrDefault();
+                        surgeonmodel.ProcedureId = _surgeon.ProcedureId;
+                        surgeonmodel.ClinicId = _surgeon.ClinicId;
+                        surgeonmodel.ClinicName = _dbcontext.Clinic.Where(x => x.ClinicId == _surgeon.ClinicId).Select(x => x.ClinicName).FirstOrDefault();
+                        surgeonmodel.SurgeonFirstName = _surgeon.SurgeonFirstName;
+                        surgeonmodel.SurgeonLastName = _surgeon.SurgeonLastName;
+                        surgeonmodel.Speciality = _surgeon.Speciality;
+                        surgeonmodel.ALSDate = _surgeon.ALSDate;
+                        surgeonmodel.DatePPGranted = _surgeon.DatePPGranted;
+                        surgeonmodel.DateStartedFirstCase = _surgeon.DateStartedFirstCase;
 
-                    lstsurgeon.Add(surgeonmodel);
+                        lstsurgeon.Add(surgeonmodel);
 
+                    }
+
+                    searchstring = searchstring.ToLower(); // Convert the search keyword to lowercase
+                    lstsurgeon = lstsurgeon
+               .Where(s => s.SurgeonFirstName.ToLower().Contains(searchstring)
+                         || s.SurgeonLastName.ToLower().Contains(searchstring) || s.Speciality.ToLower().Contains(searchstring) || s.ClinicName.ToLower().Contains(searchstring) || s.ProcedureName.ToLower().Contains(searchstring)).ToList();
+
+                    return View(lstsurgeon.ToList());
                 }
+                else
+                {
+                    var surgeon = _dbcontext.Surgeon.ToList();
+                    SurgeonViewModel surgeonmodel = new SurgeonViewModel();
+                    List<SurgeonViewModel> lstsurgeon = new();
+                    foreach (var _surgeon in surgeon)
+                    {
+                        surgeonmodel = new SurgeonViewModel();
+                        surgeonmodel.SurgeonId = _surgeon.SurgeonId;
+                        surgeonmodel.ProcedureName = _dbcontext.ProceduresClinic.Where(x => x.ProcedureId == _surgeon.ProcedureId).Select(x => x.ProcedureName).FirstOrDefault();
+                        surgeonmodel.ProcedureId = _surgeon.ProcedureId;
+                        surgeonmodel.ClinicId = _surgeon.ClinicId;
+                        surgeonmodel.ClinicName = _dbcontext.Clinic.Where(x => x.ClinicId == _surgeon.ClinicId).Select(x => x.ClinicName).FirstOrDefault();
+                        surgeonmodel.SurgeonFirstName = _surgeon.SurgeonFirstName;
+                        surgeonmodel.SurgeonLastName = _surgeon.SurgeonLastName;
+                        surgeonmodel.Speciality = _surgeon.Speciality;
+                        surgeonmodel.ALSDate = _surgeon.ALSDate;
+                        surgeonmodel.DatePPGranted = _surgeon.DatePPGranted;
+                        surgeonmodel.DateStartedFirstCase = _surgeon.DateStartedFirstCase;
 
-                return View(lstsurgeon.ToList());
+                        lstsurgeon.Add(surgeonmodel);
+
+                    }
+
+                    return View(lstsurgeon.ToList());
+                }
 
             }
             catch (Exception ex)
@@ -65,11 +100,14 @@ namespace TMSSDemo.Controllers
                 return StatusCode(500, "An error occurred while fetching users.");
             }
         }
-        public async Task<IActionResult> CreateAsync()
+        public async Task<IActionResult> Create()
         {
+            SurgeonViewModel surgeonViewModel = new();
             try
             {
-                Surgeon surgeon = new Surgeon();
+
+                surgeonViewModel.LstProcedures = new();
+                surgeonViewModel.Clinics = new();
 
                 IEnumerable<ProceduresClinic> procedureclinic = await _ProcedureService.GetProcedures();
                 var results = procedureclinic.GroupBy(
@@ -77,32 +115,38 @@ namespace TMSSDemo.Controllers
     p => p.ProcedureId,
     (key, g) => new { ProcedureName = key.ToString(), ProcedureId = g.FirstOrDefault() }).ToList();
 
-                List<SelectListItem> selectListItems = results
-   .Select(p => new SelectListItem
-   {
-       Value = p.ProcedureId.ToString(),
-       Text = p.ProcedureName.ToString()
-   }).Distinct().ToList();
 
-                ViewBag.ProceduresClinic = selectListItems;
+                List<SelectListItem> selectListItems = results.Select(p => new SelectListItem
+                {
+                    Value = p.ProcedureId.ToString(),
+                    Text = p.ProcedureName.ToString()
+                }).Distinct().ToList();
 
-                IEnumerable<Clinic> clinics = await _ClinicService.GetClinics();
-                List<SelectListItem> selectClinicItems = clinics
-.Select(p => new SelectListItem
-{
-    Value = p.ClinicId.ToString(),
-    Text = p.ClinicName
-})
-.ToList();
-                ViewBag.Clinic = selectClinicItems;
+                surgeonViewModel.LstProcedures = selectListItems;
+                ViewBag.lstProcedures = selectListItems;
 
+
+
+
+                //var getClinics = _ClinicService.GetClinics();
+
+                //foreach (var clinic in getClinics)
+                //{
+                //    surgeonViewModel.Clinics.Add(new SelectListItem
+                //   {
+                //       Value = clinic.ClinicId.ToString(),
+                //        Text = clinic.ClinicName
+                //    });
+                //}
+
+                //ViewBag.Clinics = getClinics.ToList();
 
             }
             catch (Exception ex)
             {
 
             }
-            return View();
+            return View(surgeonViewModel);
 
         }
         [HttpGet]
@@ -121,6 +165,24 @@ namespace TMSSDemo.Controllers
         [HttpGet]
         public JsonResult GetClinicbyProcedure(string ProcedureName)
         {
+            SurgeonViewModel surgeonViewModel = new();
+            surgeonViewModel.Clinics = new();
+
+
+            var getClinics = _ClinicService.GetClinics();
+
+            foreach (var clinic in getClinics)
+            {
+                surgeonViewModel.Clinics.Add(new SelectListItem
+                {
+                    Value = clinic.ClinicId.ToString(),
+                    Text = clinic.ClinicName
+                });
+            }
+
+
+           // ViewBag.Clinics = getClinics.ToList();
+           // return Json(surgeonViewModel);
 
             var procedures = (from p in _dbcontext.ProceduresClinic
                               join c in _dbcontext.Clinic on p.ClinicId equals c.ClinicId
@@ -128,6 +190,18 @@ namespace TMSSDemo.Controllers
                               select (new { ClinicId = c.ClinicId, ClinicName = c.ClinicName })
 
                  ).ToList();
+
+            List<SelectListItem> lstClincsDetails = new List<SelectListItem>();
+            foreach (var item in procedures)
+            {
+                lstClincsDetails.Add(new SelectListItem
+                {
+                    Value = item.ClinicId.ToString(),
+                    Text = item.ClinicName
+                });
+            }
+            ViewBag.Clinics = lstClincsDetails;
+
 
             return Json(procedures);
         }
@@ -149,9 +223,6 @@ namespace TMSSDemo.Controllers
             IEnumerable<Surgeon> surgeon = await _SurgeonService.GetSurgeon();
 
             var _surgeon = surgeon.Where(c => c.SurgeonId == id).FirstOrDefault();
-
-            //IEnumerable<Clinic> clinics = await _ClinicService.GetClinics();
-            //ViewBag.Clinics = clinics.ToList();
             IEnumerable<ProceduresClinic> procedureclinic = await _ProcedureService.GetProcedures();
             var results = procedureclinic.GroupBy(
 p => p.ProcedureName,
@@ -164,12 +235,11 @@ p => p.ProcedureId,
     Value = p.ProcedureId.ToString(),
     Text = p.ProcedureName.ToString()
 }).Distinct().ToList();
-         //   surgeonmodel.ProcedureName = _dbcontext.ProceduresClinic.Where(x => x.ProcedureId == _surgeon.ProcedureId).Select(x => x.ProcedureName).FirstOrDefault();
-
 
             ViewBag.ProceduresClinic = selectListItems;
 
-            IEnumerable<Clinic> clinics = await _ClinicService.GetClinics();
+
+            IEnumerable<Clinic> clinics = _ClinicService.GetClinics();
             List<SelectListItem> selectClinicItems = clinics
 .Select(p => new SelectListItem
 {

@@ -21,9 +21,9 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Clinic>> GetClinics()
+        public  IEnumerable<Clinic> GetClinics()
         {
-            return await _tMSSDbContext.Clinic.ToListAsync();
+            return  _tMSSDbContext.Clinic.ToList();
         }
 
         public Clinic CreateClinic(Clinic clinic)

@@ -17,5 +17,6 @@ namespace TMSS.Domain.Entities
 
         [Required(ErrorMessage = "clinic location  is required!")]
         public string? ClinicLocation { get; set; }
+      
     }
 }
