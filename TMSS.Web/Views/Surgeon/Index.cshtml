@@ -9,7 +9,26 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<style type="text/css">
+    form {
+        float: right;
+    }
+
+</style>
 <form action="/Surgeon/Index" method="get">
+
+    <div class="input-group md-form form-sm form-2 p1-0">
+        <input name="searchstring" type="text" style="width:400px;" placeholder="Search" class="form-control" />
+        <div class="input-group-btn">
+            <button class="btn btn-primary" type="submit" onclick="fnSurgeonDetails()">
+                <i class="fas fa-search" aria-hidden="true"></i>
+                @*                 <i class="fas fa-search text-grey" aria-hidden="true"></i>
+                *@
+            </button>
+        </div>
+    </div>
+</form>
+@* <form action="/Surgeon/Index" method="get">
 
     <div class="input-group md-form form-sm form-2 p1-0">
         <input name="searchstring" style="width:400px;align-items:end" type="text" placeholder="Search" />
@@ -20,7 +39,7 @@
             </button>
         </div>
     </div>
-</form>
+</form> *@
 <br/>
 <br/>
 <!DOCTYPE html>
@@ -40,10 +59,10 @@
             <thead>
                 <tr>
                     <th>
-                        SurgeonFirstName
+                        First Name
                     </th>
                     <th>
-                        SurgeonLastName
+                        Last Name
                     </th>
                     <th>
                         Speciality
