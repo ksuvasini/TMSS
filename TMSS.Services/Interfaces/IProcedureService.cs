@@ -5,5 +5,7 @@ namespace TMSS.Services.Interfaces
     public interface IProcedureService
     {
         Task<IEnumerable<ProcedureDto>> GetProcedures();
+
+        ProcedureDto SaveProcedure(ProcedureDto procedureDto);
     }
 }

@@ -20,8 +20,13 @@ namespace TMSS.Services.Services
         {
             //  var result = _procedureRepository.GetProcedures();
             return _mapper.Map<List<ProcedureDto>>(await _procedureRepository.GetProcedures());
-
             //   throw new NotImplementedException();
+        }
+
+        public ProcedureDto SaveProcedure(ProcedureDto procedureDto)
+        {
+            return _procedureRepository.SaveProcedure(procedureDto);
+            throw new NotImplementedException();
         }
     }
 }

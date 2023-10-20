@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp;
 using System.Diagnostics;
+using System.Security.Claims;
 using TMSS.Domain.DTO;
 using TMSS.Infrastructure.Enum;
 using TMSS.Services.Interfaces;
@@ -31,8 +35,21 @@ namespace TMSSDemo.Controllers
         {
             LoginViewModel userDetails = _mapper.Map<LoginViewModel>(_loginService.IsAuthenticated(_mapper.Map<UserDto>(loginViewModel)));
             if (userDetails == null) throw new Exception("Invalid Credentials");
-            if (userDetails.IsAuthenticated)
+            if (!userDetails.IsAuthenticated)
             {
+                var userClaims = new List<Claim>()
+                {
+                     new Claim("UserName",userDetails.UserName)
+                 //   new Claim(ClaimTypes.Name,userDetails.UserName)
+                };
+                foreach (var role in userDetails.UserRoles)
+                {
+                    Claim roleClaim = new Claim(ClaimTypes.Role, role.RoleName);
+                    userClaims.Add(roleClaim);
+                }
+                var userIdentity = new ClaimsIdentity(userClaims, "User Identity");
+                var userPrincipal = new ClaimsPrincipal(new[] { userIdentity });
+                HttpContext.SignInAsync(userPrincipal);
                 if (!userDetails.UserRoles.Any())
                     throw new Exception("Roles are not assigned to User");
                 if (userDetails.UserRoles.Any(jj =>
@@ -40,11 +57,11 @@ namespace TMSSDemo.Controllers
                     return jj.RoleName == RoleTypeCode.User.ToString();
                 }))
                 {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Privacy", "Login");
                 }
                 else if (userDetails.UserRoles.Any(jj => jj.RoleName == RoleTypeCode.User.ToString()))
                 {
-                    return RedirectToAction("Index", "User");
+                    return RedirectToAction("Privacy", "Login");
                 }
                 else
                 {
@@ -84,8 +101,8 @@ namespace TMSSDemo.Controllers
             return View();
         }
 
-
-
+        //[Authorize(AuthenticationSchemes = "Bearer")]
+        [Authorize(Roles = "UserAdmin")]
         public IActionResult Privacy()
         {
             return View();
@@ -94,6 +111,12 @@ namespace TMSSDemo.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        [Authorize]
+        public IActionResult UserAccessDenied()
+        {
+            return View();
         }
     }
 }

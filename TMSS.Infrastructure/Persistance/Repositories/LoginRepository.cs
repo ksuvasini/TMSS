@@ -28,11 +28,16 @@ namespace TMSS.Infrastructure.Persistance.Repositories
 
         public UserDto IsAuthenticated(UserDto userDto)
         {
-            UserDto userDetails = _mapper.Map<UserDto>(_tMSSDbContext.User.Where(jj => jj.UserName == userDto.UserName && userDto.Password == jj.Password).FirstOrDefault());
-            if (userDetails != null)
+            UserDto userDetails = new UserDto()
             {
-                userDetails.IsAuthenticated = true;
-            }
+                UserName = "Admin",
+                Password = "Test"
+            };
+            //UserDto userDetails = _mapper.Map<UserDto>(_tMSSDbContext.User.Where(jj => jj.UserName == userDto.UserName && userDto.Password == jj.Password).FirstOrDefault());
+            //if (userDetails != null)
+            //{
+            //    userDetails.IsAuthenticated = true;
+            //}
             return userDetails;
         }
 

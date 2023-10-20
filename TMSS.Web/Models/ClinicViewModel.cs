@@ -7,10 +7,10 @@ namespace TMSS.Web.Models
 		[Key]
 		public int ClinicId { get; set; }
 
-		[Required(ErrorMessage = "clinic name is required!")]
-		public string? ClinicName { get; set; }
+		[Required(ErrorMessage = "Clinic Name is required!")]
+		public string ClinicName { get; set; }
 
-		[Required(ErrorMessage = "clinic location  is required!")]
-		public string? ClinicLocation { get; set; }
+		[Required(ErrorMessage = "Clinic Location  is required!")]
+		public string ClinicLocation { get; set; }
 	}
 }

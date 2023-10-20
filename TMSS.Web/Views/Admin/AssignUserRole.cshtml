@@ -1,0 +1,100 @@
+﻿@model TMSS.Web.Models.UserRoleViewModel
+
+@{
+    ViewData["Title"] = "AssignUserRole";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>AssignUserRole</h1>
+
+@* <h4>UserRoleViewModel</h4> *@
+<hr />
+
+<form class="row gy-2 gx-3 align-items-center">
+    <div class="col-auto">
+        <label asp-for="UserId" class="control-label"></label>
+    </div>
+    <div class="col-sm-2">
+
+        @Html.DropDownListFor(m => m.UserId, Model.Users, new { @class="form-select", @style="height: 50%;" })
+    </div>
+    <div class="col-auto">
+        <label asp-for="RoleId" class="control-label"></label>
+    </div>
+    <div class="col-sm-2">
+
+        <div class="input-group">
+            @*  <div class="input-group-text">@@</div> *@
+            @Html.DropDownListFor(m => m.RoleId, Model.Roles, new { @class="form-select", @style="height: 50%;" })
+        </div>
+    </div>
+
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+
+</form>
+<div class="row" style="margin-top: 10px">
+    <div class="col-xs-12">
+        <table id="grid"></table>
+    </div>
+</div>
+ <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script type="text/javascript">
+    var grid, dialog;
+    function Edit(e) {
+        $('#ID').val(e.data.id);
+        $('#Name').val(e.data.record.Name);
+        $('#PlaceOfBirth').val(e.data.record.PlaceOfBirth);
+        dialog.open('Edit Player');
+    }
+    function Save() {
+        var record = {
+            ID: $('#ID').val(),
+            Name: $('#Name').val(),
+            PlaceOfBirth: $('#PlaceOfBirth').val()
+        };
+        $.ajax({ url: '/Players/Save', data: { record: record }, method: 'POST' })
+            .done(function () {
+                dialog.close();
+                grid.reload();
+            })
+            .fail(function () {
+                alert('Failed to save.');
+                dialog.close();
+            });
+    }
+    function Delete(e) {
+        if (confirm('Are you sure?')) {
+            $.ajax({ url: '/Players/Delete', data: { id: e.data.id }, method: 'POST' })
+                .done(function () {
+                    grid.reload();
+                })
+                .fail(function () {
+                    alert('Failed to delete.');
+                });
+        }
+    }
+    $(document).ready(function () {
+        grid = $('#grid').grid({
+            primaryKey: 'ID',
+           // dataSource: '/Players/Get',
+            uiLibrary: 'bootstrap',
+            columns: [
+                { field: 'UserName', title: 'User Name', sortable: true , width: 32 },
+                { field: 'Role', title: 'Assigned Role', sortable: true },
+                // { field: 'PlaceOfBirth', title: 'Place Of Birth', sortable: true },
+                { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'glyphicon-pencil', tooltip: 'Edit', events: { 'click': Edit } },
+                { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
+            ],
+            pager: { limit: 5, sizes: [2, 5, 10, 20] }
+        });
+    });
+</script>

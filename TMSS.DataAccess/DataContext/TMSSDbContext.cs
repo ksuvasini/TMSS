@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TMSS.Domain.Entities;
+using TMSS.Web.Models;
 
 namespace TMSS.DataAccess.DataContext
 {
@@ -12,6 +13,9 @@ namespace TMSS.DataAccess.DataContext
         public TMSSDbContext(DbContextOptions<TMSSDbContext> options) : base(options) { }
         public virtual DbSet<Procedure> Procedure { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Clinic> Clinic { get; set; }
+        public virtual DbSet<Complication> Complication { get; set; }
+        public virtual DbSet<Surgeon> Surgeon { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
         }

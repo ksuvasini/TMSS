@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TMSS.DataAccess\TMSS.DataAccess.csproj" />
     <ProjectReference Include="..\TMSS.Domain\TMSS.Domain.csproj" />
   </ItemGroup>
 </Project>
