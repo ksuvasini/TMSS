@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using TMSS.DataAccess.DataContext;
 using TMSS.Domain.DTO;
-using TMSS.Domain.Interfaces;
 using TMSS.Services.Interfaces;
 using TMSS.Web.Models;
 
@@ -39,31 +37,10 @@ namespace TMSSDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string? clinicName, string? clinicLocation)
+        public async Task<IActionResult> Get(string? clinicName, string? clinicLocation)
         {
-            List<ClinicViewModel> list = new();
-
-            // list = _mapper.Map<List<ClinicViewModel>>(_clinicService.GetClinic());
-            var clinicDetails = new ClinicViewModel()
-            {
-                ClinicId = 1,
-                ClinicLocation = "Jquery",
-                ClinicName = "Jquery"
-            };
-            var clinicDetails1 = new ClinicViewModel()
-            {
-                ClinicId = 2,
-                ClinicLocation = "Jquery",
-                ClinicName = "Jquery"
-            };
-            list.Add(clinicDetails);
-            list.Add(clinicDetails1);
-            if (!string.IsNullOrEmpty(clinicName))
-            {
-                list = list.Where(j => j.ClinicName == clinicName).ToList();
-            }
-            //list2 = 
-            return Json(list);
+            // var list = _mapper.Map<List<ClinicViewModel>>(await _clinicService.GetClinic(clinicName, clinicLocation));
+            return Json(_mapper.Map<List<ClinicViewModel>>(await _clinicService.GetClinic(clinicName, clinicLocation)));
         }
 
         [HttpGet]

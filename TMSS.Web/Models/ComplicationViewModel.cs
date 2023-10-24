@@ -8,8 +8,8 @@ namespace TMSS.Web.Models
         [Key]
         public int ComplicationId { get; set; }
 
-        [Required(ErrorMessage = "complication name is required!")]
-        public string? ComplicationName { get; set; }
+        [Required(ErrorMessage = "Complication name is required!")]
+        public string ComplicationName { get; set; }
 
     }
 }

@@ -1,5 +1,6 @@
 ﻿@model TMSS.Web.Models.SurgeonViewModel
 
+
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,51 +10,139 @@
 
 <h4>SurgeonViewModel</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
                 <label asp-for="SurgeonId" class="control-label"></label>
                 <input asp-for="SurgeonId" class="form-control" />
                 <span asp-validation-for="SurgeonId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                    </div>
+                    <div class="form-group">
                 <label asp-for="SurgeonName" class="control-label"></label>
                 <input asp-for="SurgeonName" class="form-control" />
                 <span asp-validation-for="SurgeonName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                    </div>
+
+                    <div class="form-group">
                 <label asp-for="DatePPGranted" class="control-label"></label>
-                <input asp-for="DatePPGranted" class="form-control" />
-                <span asp-validation-for="DatePPGranted" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                        <input asp-for="DatePPGranted" class="form-control" />
+                        <span asp-validation-for="DatePPGranted" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
                 <label asp-for="DateFirstCase" class="control-label"></label>
                 <input asp-for="DateFirstCase" class="form-control" />
                 <span asp-validation-for="DateFirstCase" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                    </div>
+
+                    <div class="form-group">
                 <label asp-for="ALSDate" class="control-label"></label>
-                <input asp-for="ALSDate" class="form-control" />
-                <span asp-validation-for="ALSDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                        <input asp-for="ALSDate" class="form-control" />
+                        <span asp-validation-for="ALSDate" class="text-danger"></span>
+                    </div>
+                    <br />
+
+                    <div class="form-group">
                 <label asp-for="ProcedureId" class="control-label"></label>
                 <input asp-for="ProcedureId" class="form-control" />
                 <span asp-validation-for="ProcedureId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                    </div>
+                    <br />
+                    <div class="form-group">
                 <label asp-for="ClinicId" class="control-label"></label>
                 <input asp-for="ClinicId" class="form-control" />
                 <span asp-validation-for="ClinicId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
+                    </div>
+                    @* <div>
+
+                <select class="listbox" id="selectTestId" multiple>
+                <option>Select Clinic</option>
+                </select>
+                </div> *@
+
+                    <br />
+                    <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
+    }
+
+
+    <script type="text/javascript">
+
+        // $(document).ready(function () {
+        $('select[multiple]').multiselect({
+            columns: 1,
+            placeholder: 'Select options'
+
+        });
+
+        //checkList.multiselect("rebuild");
+
+        // $("#selectTestId").multiselect({
+        //     columns: 1,
+        //     placeholder: 'Select options'
+        // });
+        //checkListTest.multiselect("rebuild");
+        //});
+
+        function onChangeFunction() {
+            var selectedProcedureId = $("#procedureDropdownId :selected").text();
+
+            $.ajax({
+                dataType: 'json',
+                contentType: 'application/json; charset=utf-8',
+                url: '/Surgeon/GetClinicbyProcedure',
+                data: { ProcedureName: selectedProcedureId },
+                type: 'GET',
+                success: function (data) {
+                    alert(selectedProcedureId);
+                    $("#SelectedClinicIds").attr('disabled', false);
+                    // $("#selectTestId").attr('disabled', false);
+                    // var clinicDropdown = $("#SelectedClinicIds").empty();
+
+                    // alert(clinicDropdown);
+                    // clinicDropdown.empty();
+                    //  var clinics = JSON.stringify(_clinics);
+                    // var stringify = JSON.parse(clinics);
+                    $.each(data, function (i, clinicresult) {
+                        alert(clinicresult.clinicId);
+
+                        // $('#clinicDropdownId').append($('<option></option>').val(this.ClinicId).text(this.ClinicName);
+                        // alert(this.ClinicId)
+                        $("#selectTestId").append($('<option></option>').val(clinicresult.clinicId).text(clinicresult.clinicName));
+                    });
+
+                    // checkListTest.multiselect("rebuild");
+
+
+                    // $.each(data, function (i, clinicresult1) {
+                    //     // var li = $('<li><input type="checkbox" name="' + clinicresult.clinicId + '" id="' + clinicresult.clinicId + '"/>' + '<label for="' + clinicresult.clinicId + '"></label></li>');
+
+                    //     var li = $('<li><input type="checkbox"  id="' + clinicresult1.clinicId + '" /><lable for="' + clinicresult1.clinicId + '"></lable></li>');
+                    //     li.find('label').text(clinicresult1.clinicName);
+                    //     clinicDropdown.find('ul').append(li);
+
+
+                    // });
+                    // clinicDropdown.multiselect("rebuild");
+
+                }
+            });
+
+        }
+
+
+    </script>
+
+@* </body>
+
+
+</html> *@
 
 <div>
     <a asp-action="Index">Back to List</a>

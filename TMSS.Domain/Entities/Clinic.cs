@@ -1,4 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace TMSS.Domain.Entities
 
@@ -7,7 +12,14 @@ namespace TMSS.Domain.Entities
     {
         [Key]
         public int ClinicId { get; set; }
+      //  public string ClinicName { get; set; }
+      //  public string ClinicLocation { get; set; }
+
+        [Required(ErrorMessage = "clinic name is required!")]
         public string ClinicName { get; set; }
+
+        [Required(ErrorMessage = "clinic location  is required!")]
         public string ClinicLocation { get; set; }
+      
     }
 }

@@ -16,10 +16,21 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<ClinicDto>> GetClinic()
+        public async Task<IEnumerable<ClinicDto>> GetClinic(string? clinicName, string? clinicLocation)
         {
-            return _mapper.Map<IEnumerable<ClinicDto>>(_tMSSDbContext.Clinic.ToList());
-            //  throw new NotImplementedException();
+            //List<ClinicDto> clinis = new List<ClinicDto>();
+            //if (!string.IsNullOrEmpty(clinicName) || !string.IsNullOrEmpty(clinicLocation))
+            //{
+            //    if (!string.IsNullOrEmpty(clinicName))
+            //        clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicName == clinicName || jj.ClinicLocation == clinicLocation).ToList());
+            //    else if (!string.IsNullOrEmpty(clinicLocation))
+            //        clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicName == clinicName || jj.ClinicLocation == clinicLocation).ToList());
+            //    else
+            //        clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.ToList());
+            //}
+            List<ClinicDto> clinis = new List<ClinicDto> { new ClinicDto { ClinicId = 1, ClinicLocation = "Pune", ClinicName = "CPU" },
+            new ClinicDto { ClinicId = 2, ClinicLocation = "Noida", ClinicName = "Radiology" }};
+            return clinis;
         }
         public Task<ClinicDto> SaveClinic(ClinicDto clinicDto)
         {

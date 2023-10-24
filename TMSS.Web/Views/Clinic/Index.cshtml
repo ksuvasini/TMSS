@@ -1,5 +1,4 @@
 ﻿@model TMSS.Web.Models.ClinicViewModel
-@* @model IEnumerable<TMSS.Web.Models.ClinicViewModel> *@
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,7 +7,7 @@
 <h3>Create</h3>
 
 <div class="container">
-    @* <div class="container-full"> *@
+   
     <div class="row">
         <div class="col-xs-8">
             <form class="row gx-3 gy-2 align-items-center" id="clinicsearch">
@@ -35,99 +34,19 @@
         </div>
     </div>
     <div class="row" style="margin-top: 10px;">
-        @*   <a asp-action="Index">Back to List</a> *@
+      
         <table class="table" id="tblClinic">
-            @*  <thead>
-            <tr>
-            <th>
-            @Html.DisplayNameFor(model => model.ClinicId)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.ClinicName)
-            </th>
-            <th>
-            @Html.DisplayNameFor(model => model.ClinicLocation)
-            </th>
-            <th>Edit</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr></tr> *@
-            @*  @foreach (var item in Model)
-            {
-            <tr>
-            <td>
-            @Html.DisplayFor(modelItem => item.ClinicId)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.ClinicName)
-            </td>
-            <td>
-            @Html.DisplayFor(modelItem => item.ClinicLocation)
-            </td>
-            <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ })
-            | @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-            </tr>
-            }
-            </tbody>*@
+           
         </table>
     </div>
 
 </div>
-
-@* <div class="modal fade" id="staticBackdropmodal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Patient</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="clinicform">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-                    <div class="form-group">
-                        <label asp-for="ClinicName" class="control-label"></label>
-                        <input type="text" class="form-control" id="ClinicName">
-                        <span asp-validation-for="ClinicName" class="text-danger"></span>
-
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ClinicLocation" class="control-label"></label>
-                        <input asp-for="ClinicLocation" class="form-control" />
-                        <span asp-validation-for="ClinicLocation" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <input value="Save Clinic Details" class="btn btn-primary" type="submit" onclick="SaveClinic()" />
-
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Add Patient</button>
-            </div>
-        </div>
-    </div>
-</div> *@
-@* <div id="dialog" style="display: none">
-    <input type="hidden" id="ID" />
-    <div class="row">
-        <div class="col-md-4">
-
-        </div>
-    </div>
-</div> *@
-
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
                 <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Clinic</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearFileds()" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form id="clinicform">
@@ -150,15 +69,14 @@
             </div>
             <div class="modal-footer">
                 <div class="form-group">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearFileds()">Cancel</button>
                     <input value="Save Clinic Details" class="btn btn-primary" type="button" onclick="SaveClinic()" />
                 </div>
             </div>
         </div>
     </div>
 </div>
-@* @section Scripts
-    { *@
+
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -166,27 +84,23 @@
 }
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+@* <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script> *@
+<script src="~/lib/gijgo/modular/js/grid.js"></script>
+<script src="~/lib/gijgo/modular/js/grid.min.js"></script>
 
-@* <i class="far fa-edit"></i> <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script> *@
-@* @section Scripts{
-    <partial name="_ValidationScriptsPartial" />
-} *@
 <script type="text/javascript">
     var grid, dialog;
     $(document).ready(function () {
         $.validator.unobtrusive.parse($("#clinicform"));
         GetClinics();
-        // dialog = $('#staticBackdrop').dialog({
-        //     uiLibrary: 'bootstrap5',
-        //     iconsLibrary: 'fontawesome',
-        //     autoOpen: false,
-        //     resizable: false,
-        //     modal: true
-        // });
-      
-
     });
+
+    function clearFileds() {
+        $('#ClinicId').val('');
+        $('#ClinicName').val('');
+        $('#ClinicLocation').val('');
+    }
+
     $('#btnSearch').on('click', function () {
         grid.reload({ clinicName: $('#txtClinicName').val(), clinicLocation: $('#txtClinicLocation').val() });
     });
@@ -196,12 +110,9 @@
         grid.reload({ clinicName: '', clinicLocation: '' });
     });
     function Edit(e) {
-        console.log(e.data);
         $('#ClinicId').val(e.data.id);
         $('#ClinicName').val(e.data.record.clinicName);
         $('#ClinicLocation').val(e.data.record.clinicLocation);
-        // $('#PlaceOfBirth').val(e.data.record.PlaceOfBirth);
-       // dialog.open('Edit Player');
         $('#staticBackdrop').modal('show');
     }
 
@@ -213,6 +124,7 @@
             columns: [
                 { field: 'clinicName', title: 'Clinic Name', sortable: true },
                 { field: 'clinicLocation', title: 'Clinic Location', sortable: true },
+                { field: 'clinicId', hidden: true },
                 // { field: 'PlaceOfBirth', title: 'Place Of Birth', sortable: true },
                 { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
                 // { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
@@ -222,15 +134,13 @@
     }
 
     function SaveClinic() {
-        // var selected = $("input[type='radio'][name='Gender']:checked");
+        if (!$("#clinicform").valid()) {
+            return false;
+        }
         let clinicViewModel = {
             ClinicId: $('#ClinicId').val(),
             ClinicName: $('#ClinicName').val(),
             ClinicLocation: $('#ClinicLocation').val()
-            // standard: $("#StudentStd").val(),
-            // city: $("#StudentCity").val(),
-            //  isRegular: $("#IsRegular").is(":checked")
-            //  gender: selected.length > 0 ? selected.val() : 0,
         }
         console.log(clinicViewModel);
         $.ajax({
@@ -238,9 +148,11 @@
             method: "POST",
             data: { clinicViewModel: clinicViewModel },
             success: function (response) {
+                $('#ClinicId').val('');
+                $('#ClinicName').val('');
+                $('#ClinicLocation').val('');
                 dialog.close();
                 grid.reload();
-                //  GetClinics();
             },
             error: function (request, status, error) {
                 alert(request.responseText);

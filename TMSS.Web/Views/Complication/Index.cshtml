@@ -5,24 +5,165 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h3>Complication</h3>
+<h4>Complication Details</h4>
 <div class="container">
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            
-            <div class="form-group">
-                <label asp-for="ComplicationName" class="control-label"></label>
-                <input asp-for="ComplicationName" class="form-control" />
-                <span asp-validation-for="ComplicationName" class="text-danger"></span>
+    <div class="row">
+        <form asp-action="Create" id="complicationForm">
+            <div class="col-md-4">
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" id="ComplicationId" />
+                    <label asp-for="ComplicationName" class="control-label"></label>
+                    <input asp-for="ComplicationName" class="form-control" />
+                    <span asp-validation-for="ComplicationName" class="text-danger"></span>
+                    <input asp-for="ComplicationId" class="form-control" type="hidden" />
+                </div>
+                <br />
+
+
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="col-md-4">
+                <div class="form-group">
+                    <input type="button" value="Save" class="btn btn-primary" onclick="SaveComplication()" />
+                </div>
             </div>
         </form>
     </div>
-</div>
-</div>
+    <div class="row">
+        <div class="col-xs-8">
+            <form class="row gx-3 gy-2 align-items-center" id="clinicsearch">
+                <div class="col-sm-3">
+                    <input id="txtComplicationName" type="text" placeholder="Complication..." class="form-control" />
+                </div>
+                @*   <div class="col-sm-3">
+                <input id="txtClinicLocation" type="text" placeholder="Location..." class="form-control" />
+                </div> *@
+                <div class="col-auto">
+                    <button id="btnSearch" type="button" class="btn btn-outline-warning">Search</button>
+                </div>
+                <div class="col-auto">
+                    <button id="btnClear" type="button" class="btn btn-outline-warning">Clear</button>
+                </div>
+                <div class="col-auto" style="margin-left: 19%;">
+                    <div class="form-group">
+                        @*  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Add New Clinic
+                        </button> *@
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row" style="margin-top: 10px;">
 
+        <table class="table" id="tblComplication">
+        </table>
+    </div>
+    @section scripts{
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+        <script src="~/js/jquery.multiselect.js"></script>
+        @* <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script> *@
+        <script src="~/lib/gijgo/modular/js/grid.js"></script>
+        <script src="~/lib/gijgo/modular/js/grid.min.js"></script>
+
+        <script type="text/javascript">
+            var grid, dialog;
+            $(document).ready(function () {
+                //$.validator.unobtrusive.parse($("#complicationForm"));
+                GetComplication();
+                // dialog = $('#staticBackdrop').dialog({
+                //     uiLibrary: 'bootstrap5',
+                //     iconsLibrary: 'fontawesome',
+                //     autoOpen: false,
+                //     resizable: false,
+                //     modal: true
+                // });
+
+
+            });
+
+            function clearFileds() {
+                $('#ClinicId').val('');
+                $('#ComplicationName').val('');
+
+            }
+
+            // $('#btnClear').on('click', function () {
+            //     clearFileds();
+            //     grid.reload({ clinicName: '', clinicLocation: '' });
+            // });
+            // $('#btnClear').on('click', function () {
+            //     clearFileds();
+            //     grid.reload({ clinicName: '', clinicLocation: '' });
+            // });
+
+            $('#btnSearch').on('click', function () {
+                grid.reload({ complicationName: $('#txtComplicationName').val() });
+            });
+            $('#btnClear').on('click', function () {
+                $('#txtComplicationName').val('');
+                // $('#txtClinicLocation').val('');
+                grid.reload({ complicationName: '' });
+            });
+            function Edit(e) {
+                // console.log(e.data);
+                $('#ComplicationId').val(e.data.id);
+                $('#ComplicationName').val(e.data.record.complicationName);
+                // $('#ClinicLocation').val(e.data.record.clinicLocation);
+                // $('#PlaceOfBirth').val(e.data.record.PlaceOfBirth);
+                // dialog.open('Edit Player');
+                //$('#staticBackdrop').modal('show');
+            }
+
+            function GetComplication() {
+                grid = $('#tblComplication').grid({
+                    primaryKey: 'ID',
+                    dataSource: '/Complication/Get',
+                    uiLibrary: 'bootstrap',
+                    columns: [
+                        { field: 'complicationName', title: 'Complication Name', sortable: true },
+                        { field: 'complicationId', hidden: true },
+                        // { field: 'PlaceOfBirth', title: 'Place Of Birth', sortable: true },
+                        { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
+                        // { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
+                    ],
+                    pager: { limit: 5, sizes: [2, 5, 10, 20] }
+                });
+            }
+
+            function SaveComplication() {
+                if (!$("#complicationForm").valid())
+                {
+                    return false;
+                }
+                let complicationViewModel = {
+                    ComplicationId: $('#ComplicationId').val(),
+                    ComplicationName: $('#ComplicationName').val()
+                }
+                console.log(complicationViewModel);
+                $.ajax({
+                    url: "/Complication/Create",
+                    method: "POST",
+                    data: { complicationViewModel: complicationViewModel },
+                    success: function (response) {
+                        $('#ComplicationId').val('');
+                        $('#ComplicationName').val('');
+                        //   dialog.close();
+                        grid.reload();
+                        //  GetClinics();
+                    },
+                    error: function (request, status, error) {
+                        alert(request.responseText);
+                    }
+                });
+
+
+            }
+
+        </script>
+    }
+</div>
 

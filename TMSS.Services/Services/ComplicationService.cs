@@ -11,11 +11,11 @@ using TMSS.Services.Interfaces;
 
 namespace TMSS.Services.Services
 {
-    public class CompilationService : ICompilationService
+    public class ComplicationService : IComplicationService
     {
         public IComplicationRepository _complicationRepository { get; set; }
         private readonly IMapper _mapper;
-        public CompilationService(IComplicationRepository complicationRepository, IMapper mapper)
+        public ComplicationService(IComplicationRepository complicationRepository, IMapper mapper)
         {
             _complicationRepository = complicationRepository;
             _mapper = mapper;

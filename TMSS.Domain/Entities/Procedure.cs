@@ -5,5 +5,7 @@
         public int ProcedureId { get; set; }
         public string ProcedureName { get; set; }    
         public string ProcedureType { get; set; }
+        public int ClinicId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

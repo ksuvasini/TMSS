@@ -4,7 +4,7 @@ namespace TMSS.Infrastructure.Persistance.Repositories
 {
     public class BaseRepository
     {
-        protected readonly TMSSDbContext _tmssDbContext;
+        private readonly TMSSDbContext _tmssDbContext;
         public BaseRepository(TMSSDbContext tmssDbContext)
         {
             _tmssDbContext = tmssDbContext ?? throw new ArgumentNullException(nameof(tmssDbContext));

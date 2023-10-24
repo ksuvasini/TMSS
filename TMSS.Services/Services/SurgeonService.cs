@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using TMSS.Domain.DTO;
-using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
 using TMSS.Services.Interfaces;
-using TMSS.Web.Models;
 
 namespace TMSS.Services.Services
 {
@@ -17,9 +15,9 @@ namespace TMSS.Services.Services
             _surgeonRepository = surgeonRepository;
         }
 
-        public Task<IEnumerable<SurgeonDto>> GetSurgeon()
+        public async Task<IEnumerable<SurgeonDto>> GetSurgeon(string? surgeonName)
         {
-            return _surgeonRepository.GetSurgeons();
+            return  await _surgeonRepository.GetSurgeons(surgeonName);
             // throw new NotImplementedException();
         }
 

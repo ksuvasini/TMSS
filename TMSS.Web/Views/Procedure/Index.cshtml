@@ -5,31 +5,185 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@* <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" /> *@
+<link href="~/css/jquery.multiselect.css" rel="stylesheet" />
 
-<h3>Add Procedure</h3>
+<style>
+    ul,
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: nont;
+    }
+
+    .label {
+        color: #000;
+        font-size: 16px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+</style>
 <div class="container">
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Index">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ProcedureId" class="control-label"></label>
-                <input asp-for="ProcedureId" class="form-control" />
-                <span asp-validation-for="ProcedureId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProcedureName" class="control-label"></label>
-                <input asp-for="ProcedureName" class="form-control" />
-                <span asp-validation-for="ProcedureName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save Procedure" class="btn btn-primary" />
-            </div>
-        </form>
+    <h3>Add Procedure</h3>
+    @* <div class="container-full"> *@
+    <div class="row">
+        <div class="col-xs-8">
+            <form asp-action="Index" class="row gx-3 gy-2 align-items-center" id="frmProcedure">
+                <div class="col-sm-3">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <input type="hidden" id="ProcedureId" />
+                        <label asp-for="ProcedureName" class="control-label"></label>
+                        <input asp-for="ProcedureName" class="form-control" />
+                        <span asp-validation-for="ProcedureName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label asp-for="ProcedureId" class="control-label"></label>
+                        @*  <input asp-for="ProcedureId" type="hidden" class="form-control" /> *@
+                        @Html.ListBoxFor(model => model.SelectedClinics,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
+                        <span asp-validation-for="ProcedureId" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <input type="button" value="Save Procedure" class="btn btn-primary" onclick="fnCreateProcAndClinicDetails()" style="margin-top: 21px;" />
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-</div>
-@* <div>
-    <a asp-action="Index">Back to List</a>
-</div> *@
+    <br />
+    <h5> Procedure Details </h5>
+    <hr />
+    <div class="row">
+        <div class="col-xs-8">
+            <form class="row gx-3 gy-2 align-items-center" id="clinicsearch">
+                <div class="col-sm-3">
+                    <input id="txtProcedureName" type="text" placeholder="Procedure Name..." class="form-control" />
+                </div>
+                <div class="col-sm-3">
+                    <input id="txtClinicName" type="text" placeholder="Clinic Name..." class="form-control" />
+                </div>
+                <div class="col-auto">
+                    <button id="btnSearch" type="button" class="btn btn-outline-warning">Search</button>
+                </div>
+                <div class="col-auto">
+                    <button id="btnClear" type="button" class="btn btn-outline-warning">Clear</button>
+                </div>
+                @*  <div class="col-auto" style="margin-left: 19%;">
+                <div class="form-group">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                Add New Clinic
+                </button>
+                </div>
+                </div> *@
+            </form>
+        </div>
+    </div>
+    <br />
 
+    <div class="row" style="margin-top: 10px;">
+
+        <table class="table" id="tblProcedure">
+        </table>
+    </div>
+
+</div>
+
+@* <div class="container"> *@
+
+@* </div> *@
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/jquery.multiselect.js"></script>
+@* <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script> *@
+<script src="~/lib/gijgo/modular/js/grid.js"></script>
+<script src="~/lib/gijgo/modular/js/grid.min.js"></script>
+<script type="text/javascript">
+    var grid, dialog;
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse($("#frmProcedure"));
+        GetProcedures();
+        // dialog = $('#staticBackdrop').dialog({
+        //     uiLibrary: 'bootstrap5',
+        //     iconsLibrary: 'fontawesome',
+        //     autoOpen: false,
+        //     resizable: false,
+        //     modal: true
+        // });
+    });
+
+    function Edit(e) {
+        console.log(e.data);
+        $('#ProcedureId').val(e.data.id);
+        $('#ProcedureName').val(e.data.record.procedureName);
+        // var checkBoxId = "#ms-opt-" + 1;
+        // $(checkBoxId).attr("checked", "checked");
+        // $('option', $('.ms-options-wrap')).each(function (element) {
+        //     debugger;
+        //     console.log($(this));
+        //     $(this).removeAttr('selected').prop('selected', true);
+        // });
+    }
+
+    $('#btnSearch').on('click', function () {
+        grid.reload({ procedureName: $('#txtProcedureName').val(), clinicName: $('#txtClinicName').val() });
+    });
+
+    function GetProcedures() {
+        grid = $('#tblProcedure').grid({
+            primaryKey: 'ID',
+            dataSource: '/Procedure/Get',
+            uiLibrary: 'bootstrap',
+            columns: [
+                { field: 'procedureName', title: 'Procedure Name', sortable: true },
+                { field: 'clinicName', title: 'Clinic Name', sortable: true },
+                { field: 'procedureId', hidden: true },
+                // { field: 'PlaceOfBirth', title: 'Place Of Birth', sortable: true },
+                { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
+                // { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
+            ],
+            pager: { limit: 5, sizes: [2, 5, 10, 20] }
+        });
+    }
+    // $(document).ready(function () {
+    $("#selectedClinicIds").multiselect({
+        columns: 1,
+        placeholder: 'Select Clinic',
+        includeSelectAllOption: true,
+        enableFiltering: true
+    });
+    // });
+    function fnCreateProcAndClinicDetails() {
+        event.preventDefault();
+
+        var proceName = $("#ProcedureName").val();
+        var prodAndClinicModel = new Object();
+        var url = '@Url.Action("Create", "Procedure")';
+        prodAndClinicModel.ProcedureId = $('#ProcedureId').val();
+        prodAndClinicModel.ProcedureName = proceName;
+        prodAndClinicModel.selectedClinicIds = $("#selectedClinicIds").val();
+        //alert(prodAndClinicModel.selectedClinicIds);
+        $.ajax({
+            type: "post",
+            dataType: "json",
+            url: url,
+            data: prodAndClinicModel,
+            success: function (result) {
+                if (result) {
+
+                    alert("successfully-saved");
+                }
+            }
+        });
+        $(".successfully-saved").css("display", "block").delay(1000).fadeOut(1000);
+
+        var url1 = '@Url.Action("Create", "Procedure")';
+        // window.location.href = url1;
+    }
+
+</script>

@@ -19,8 +19,8 @@ namespace TMSS.Web.Models
 
 		[Required(ErrorMessage = "surgeon name is required!")]
 		public string? SurgeonName { get; set; }
-
-		public string? Complication { get; set; }
+        [Required(ErrorMessage = "Complication name is required!")]
+        public string? Complication { get; set; }
 
 		public int ComplicationId { get; set; }
 

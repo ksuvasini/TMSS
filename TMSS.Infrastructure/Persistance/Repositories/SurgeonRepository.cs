@@ -3,7 +3,6 @@ using TMSS.DataAccess.DataContext;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
-using TMSS.Web.Models;
 
 namespace TMSS.Infrastructure.Persistance.Repositories
 {
@@ -38,12 +37,13 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<SurgeonDto>> GetSurgeons()
+        public async Task<IEnumerable<SurgeonDto>> GetSurgeons(string? surgeonName)
         {
             List<SurgeonDto> complications = new List<SurgeonDto>();
             complications.Add(new SurgeonDto() { SurgeonId = 1, SurgeonName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
             // return await _tmssDbContext.Surgeon.ToListAsync();
-            return (Task<IEnumerable<SurgeonDto>>)_mapper.Map<IEnumerable<SurgeonDto>>(complications);
+           // return (Task<IEnumerable<SurgeonDto>>)_mapper.Map<IEnumerable<SurgeonDto>>(complications);
+           return complications;
         }
     }
 }

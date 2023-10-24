@@ -19,9 +19,13 @@ namespace TMSS.Services.Services
 
         public UserDto IsAuthenticated(UserDto userDto)
         {
+
             UserDto userDetails = _loginRepository.IsAuthenticated(userDto);
-            userDetails.UserRoles = new List<UserRoleDto>();
-            userDetails.UserRoles =  _loginRepository.GetUserRoles(userDto);
+            if (userDetails != null)
+            {
+                userDetails.UserRoles = new List<UserRoleDto>();
+                userDetails.UserRoles = _loginRepository.GetUserRoles(userDto);
+            }
             return userDetails;
         }
     }

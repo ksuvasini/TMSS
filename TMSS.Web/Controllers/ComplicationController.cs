@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration.Templating.Compilation;
 using TMSS.Domain.DTO;
 using TMSS.Services.Interfaces;
 using TMSS.Web.Models;
@@ -9,9 +8,9 @@ namespace TMSSDemo.Controllers
 {
     public class ComplicationController : Controller
     {
-        public TMSS.Services.Interfaces.ICompilationService _complicationService { get; set; }
+        public IComplicationService _complicationService { get; set; }
         private readonly IMapper _mapper;
-        public ComplicationController(IMapper mapper, TMSS.Services.Interfaces.ICompilationService complicationService)
+        public ComplicationController(IMapper mapper, IComplicationService complicationService)
         {
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             _complicationService = complicationService;
@@ -23,9 +22,14 @@ namespace TMSSDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string? complicationName)
         {
-            return Json(_complicationService.GetComplications());
+            List<ComplicationViewModel> complicationViewModels = new List<ComplicationViewModel>();
+
+            return Json(new List<ComplicationViewModel> {
+                new ComplicationViewModel { ComplicationName = "Testnew" },
+                new ComplicationViewModel { ComplicationName = "Test" }});
+            //return Json(_complicationService.GetComplications());
         }
 
         [HttpPost]

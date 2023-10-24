@@ -1,5 +1,15 @@
 ﻿using AutoMapper;
+using AutoMapper;
+using Humanizer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using TMSS.DataAccess.DataContext;
+using TMSS.Domain.Entities;
+using TMSS.Services.Interfaces;
+using TMSS.Services.Services;
+using TMSS.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TMSS.Domain.DTO;
 using TMSS.Services.Interfaces;
@@ -36,9 +46,10 @@ namespace TMSSDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public IActionResult Get(string? surgeonName)
         {
-            return Json(_surgeonService.GetSurgeon());
+            var result = _surgeonService.GetSurgeon(surgeonName);
+            return Json(result.Result);
         }
 
         [HttpPost]

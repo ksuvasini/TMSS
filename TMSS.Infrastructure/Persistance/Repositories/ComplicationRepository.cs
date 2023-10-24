@@ -18,19 +18,24 @@ namespace TMSS.Infrastructure.Persistance.Repositories
 
         public ComplicationDto SaveProcedure(ComplicationDto complicationDto)
         {
-            Complication complication = _mapper.Map<Complication>(complicationDto);
-            if (complication.ComplicationId > 0)
+            //Complication complication = _mapper.Map<Complication>(complicationDto);
+            if (complicationDto.ComplicationId > 0)
             {
-                var exisitingProcedure = _tMSSDbContext.Complication.FirstOrDefault(j => j.ComplicationId == complication.ComplicationId);
-                exisitingProcedure.ComplicationName = complication.ComplicationName;
-                exisitingProcedure.ModifiedBy = complication.ModifiedBy;
-                exisitingProcedure.ModifiedDate = DateTime.Now;
+                var exisitingComplication = _tMSSDbContext.Complication.FirstOrDefault(j => j.ComplicationId == complicationDto.ComplicationId);
+                exisitingComplication.ComplicationName = complicationDto.ComplicationName;
+                exisitingComplication.ModifiedBy = complicationDto.ModifiedBy;
+                exisitingComplication.ModifiedDate = DateTime.Now;
             }
             else
             {
-                complication.CreatedBy = "";
-                complicationDto.CreatedDate = DateTime.Now;
-                _tMSSDbContext.Complication.Add(complication);
+                //complication.CreatedBy = complication.CreatedBy;
+                //complication.CreatedDate = DateTime.Now;
+                _tMSSDbContext.Complication.Add(new Complication
+                {
+                    ComplicationName = complicationDto.ComplicationName,
+                    CreatedBy = complicationDto.CreatedBy,
+                    CreatedDate = DateTime.Now
+                });
             }
             var result = _tMSSDbContext.SaveChanges();
             throw new NotImplementedException();

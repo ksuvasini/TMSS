@@ -16,10 +16,10 @@ namespace TMSS.Services.Services
             _clinicRepository = clinicRepository;
         }
 
-        public Task<IEnumerable<ClinicDto>> GetClinic()
+        public async Task<IEnumerable<ClinicDto>> GetClinic(string? clinicName,
+                                                      string? clinicLocation)
         {
-            return _clinicRepository.GetClinic();
-            // throw new NotImplementedException();
+            return await _clinicRepository.GetClinic(clinicName, clinicLocation);
         }
 
         public Task<IEnumerable<ClinicDto>> SaveClinic(ClinicDto clinic)
