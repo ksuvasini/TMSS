@@ -28,12 +28,12 @@ namespace TMSSDemo.Controllers
         [HttpPost]
         public IActionResult Create(ClinicViewModel clinicViewModel)
         {
-            if (!ModelState.IsValid)
-            {
-                return View(clinicViewModel);
-            }
+            //if (!ModelState.IsValid)
+            //{
+            //  return View(clinicViewModel);
+            // }
             var result = _clinicService.SaveClinic(_mapper.Map<ClinicDto>(clinicViewModel));
-            return View();
+            return Json(result);
         }
 
         [HttpGet]

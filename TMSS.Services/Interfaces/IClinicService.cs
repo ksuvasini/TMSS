@@ -6,6 +6,6 @@ namespace TMSS.Services.Interfaces
     {
         Task<IEnumerable<ClinicDto>> GetClinic(string? clinicName, string? clinicLocation);
 
-        Task<IEnumerable<ClinicDto>> SaveClinic(ClinicDto clinic);
+        int SaveClinic(ClinicDto clinic);
     }
 }

@@ -22,10 +22,10 @@ namespace TMSS.Services.Services
             return await _clinicRepository.GetClinic(clinicName, clinicLocation);
         }
 
-        public Task<IEnumerable<ClinicDto>> SaveClinic(ClinicDto clinic)
+        public int SaveClinic(ClinicDto clinic)
         {
-            var result = _clinicRepository.SaveClinic(clinic);
-            throw new NotImplementedException();
+            return _clinicRepository.SaveClinic(clinic);
+
         }
     }
 }

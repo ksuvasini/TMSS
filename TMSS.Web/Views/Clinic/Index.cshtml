@@ -110,7 +110,8 @@
         grid.reload({ clinicName: '', clinicLocation: '' });
     });
     function Edit(e) {
-        $('#ClinicId').val(e.data.id);
+        debugger;
+        $('#ClinicId').val(e.data.record.clinicId);
         $('#ClinicName').val(e.data.record.clinicName);
         $('#ClinicLocation').val(e.data.record.clinicLocation);
         $('#staticBackdrop').modal('show');
