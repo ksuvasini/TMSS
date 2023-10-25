@@ -12,71 +12,8 @@
         padding-left: 4px;
     }
 </style>
-<h3>Add Surgeon</h3>
+<h4>Add Surgeon</h4>
 <div class="container">
-
-    <div class="row">
-        <form id="surgeonForm">
-            <div class="row">
-                <div class="col-sm-3">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="SurgeonId" type="hidden" class="form-control" />
-
-                    <div class="form-group">
-                        <label asp-for="SurgeonName" class="control-label"></label>
-                        <input asp-for="SurgeonName" class="form-control" />
-                        <span asp-validation-for="SurgeonName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="DatePPGranted" class="control-label"></label>
-                        <input asp-for="DatePPGranted" class="form-control" />
-                        <span asp-validation-for="DatePPGranted" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="DateFirstCase" class="control-label"></label>
-                        <input asp-for="DateFirstCase" class="form-control" />
-                        <span asp-validation-for="DateFirstCase" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="ALSDate" class="control-label"></label>
-                        <input asp-for="ALSDate" class="form-control" />
-                        <span asp-validation-for="ALSDate" class="text-danger"></span>
-                    </div>
-                </div>
-
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="ProcedureId" class="control-label"></label>
-                        @* <select asp-for="ProcedureName" class="form-control" /> *@
-                        @Html.DropDownListFor(m => m.ProcedureId, Model.Procedures, "--Please select--",new { @class="form-control" })
-                        <span asp-validation-for="ProcedureId" class="text-danger"></span>
-                    </div>
-
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="ClinicId" class="control-label"></label>
-                        @Html.DropDownListFor(m => m.ClinicId, Model.Clinics, "--Please select--",new { @class="form-control" })
-                        <span asp-validation-for="ClinicId" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <input type="button" value="Create" class="btn btn-primary" onclick="SaveSurgeon()" />
-                </div>
-            </div>
-        </form>
-    </div>
     <div class="row">
         <div class="col-xs-8">
             <form class="row gx-3 gy-2 align-items-center" id="clinicsearch">
@@ -92,16 +29,110 @@
                 <div class="col-auto">
                     <button id="btnClear" type="button" class="btn btn-outline-warning">Clear</button>
                 </div>
-                @*  <div class="col-auto" style="margin-left: 19%;">
-                <div class="form-group">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Add New Clinic
-                </button>
+                <div class="col-auto" style="margin-left: 19%;">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                            Add Surgeon
+                        </button>
+                    </div>
                 </div>
-                </div> *@
             </form>
         </div>
     </div>
+    <br />
+
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Add Surgeon</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearFileds()" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="surgeonForm">
+                        @* <div class="row">
+                        <div class="col-sm-3">
+                        *@                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <input asp-for="SurgeonId" type="hidden" class="form-control" />
+
+                        <div class="form-group">
+                            <label asp-for="SurgeonFirstName" class="control-label">First Name</label>
+                            <input asp-for="SurgeonFirstName" class="form-control" />
+                            <span asp-validation-for="SurgeonFirstName" class="text-danger"></span>
+                        </div>
+                        @*                             </div>
+                        *@                            <div class="form-group">
+                            <label asp-for="SurgeonLastName" class="control-label">Last Name</label>
+                            <input asp-for="SurgeonLastName" class="form-control" />
+                            <span asp-validation-for="SurgeonLastName" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Speciality" class="control-label">Speciality</label>
+                            <input asp-for="Speciality" class="form-control" />
+                            <span asp-validation-for="Speciality" class="text-danger"></span>
+                        </div>
+                        @*                             <div class="col-sm-3">
+                        *@                                <div class="form-group">
+                            <label asp-for="DatePPGranted" class="control-label">DatePPGranted</label>
+                            <input asp-for="DatePPGranted" class="form-control" />
+                            <span asp-validation-for="DatePPGranted" class="text-danger"></span>
+                        </div>
+                        @*                             </div>
+                        *@
+                        @*                                  <div class="col-sm-3">
+                        *@                                <div class="form-group">
+                            <label asp-for="DateStartedFirstCase" class="control-label">DateStartedFirstCase</label>
+                            <input asp-for="DateStartedFirstCase" class="form-control" />
+                            <span asp-validation-for="DateStartedFirstCase" class="text-danger"></span>
+                        </div>
+                        @*                             </div>
+                        *@@*                         </div>
+                        *@@*                         <div class="row">
+                        *@
+                        @*                             <div class="col-sm-3">
+                        *@                                <div class="form-group">
+                            <label asp-for="ALSDate" class="control-label">ALS Date</label>
+                            <input asp-for="ALSDate" class="form-control" />
+                            <span asp-validation-for="ALSDate" class="text-danger"></span>
+                        </div>
+                        @*                             </div>
+                        *@
+                        @*                             <div class="col-sm-3">
+                        *@                                <div class="form-group">
+                            <label asp-for="ProcedureId" class="control-label"></label>
+                            @* <select asp-for="ProcedureName" class="form-control" /> *@
+                            @Html.DropDownListFor(m => m.ProcedureId, Model.Procedures, "--Please select--",new { @class="form-control" })
+                            <span asp-validation-for="ProcedureId" class="text-danger"></span>
+                        </div>
+
+                        @*                             </div>
+                        *@
+                        @*                               <div class="col-sm-3">
+                        *@                                <div class="form-group">
+                            <label asp-for="ClinicId" class="control-label"></label>
+                            @Html.DropDownListFor(m => m.ClinicId, Model.Clinics, "--Please select--",new { @class="form-control" })
+                            <span asp-validation-for="ClinicId" class="text-danger"></span>
+                        </div>
+                        @*                             </div>
+                        *@
+                        @* <div class="row">
+                        <div class="form-group">
+                        <input type="button" value="Create" class="btn btn-primary" onclick="SaveSurgeon()" />
+                        </div>
+                        </div> *@
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearFileds()">Cancel</button>
+                        <input value="Save Surgeon" class="btn btn-primary" type="button" onclick="fnCreateProcAndClinicDetails()" />
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
     <div class="row" style="margin-top: 10px;">
 
         <table class="table" id="tblSurgeon">

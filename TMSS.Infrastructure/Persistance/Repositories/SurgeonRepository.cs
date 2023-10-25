@@ -40,7 +40,7 @@ namespace TMSS.Infrastructure.Persistance.Repositories
         public async Task<IEnumerable<SurgeonDto>> GetSurgeons(string? surgeonName)
         {
             List<SurgeonDto> complications = new List<SurgeonDto>();
-            complications.Add(new SurgeonDto() { SurgeonId = 1, SurgeonName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
+           // complications.Add(new SurgeonDto() { SurgeonId = 1, SurgeonName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
             // return await _tmssDbContext.Surgeon.ToListAsync();
            // return (Task<IEnumerable<SurgeonDto>>)_mapper.Map<IEnumerable<SurgeonDto>>(complications);
            return complications;

@@ -56,16 +56,22 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             }
         }
 
-        public Task<IEnumerable<ProcedureDto>> GetProcedures(string? procedureName, string? clinicName)
+        public async Task<IEnumerable<ProcedureDto>> GetProcedures(string? procedureName, string? clinicName)
         {
             List<ProcedureDto> procedures = new List<ProcedureDto>();
             if (!string.IsNullOrEmpty(procedureName) || !string.IsNullOrEmpty(clinicName))
             {
                 var proceduresList = _tMSSDbContext.Procedure.Where(j => j.ProcedureName == procedureName && j.ClinicId == Convert.ToInt16(clinicName)).ToList();
             }
-            procedures.Add(new ProcedureDto() { ProcedureId = 1, ProcedureName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
-            // return await _tmssDbContext.Procedure.ToListAsync();
-            return (Task<IEnumerable<ProcedureDto>>)_mapper.Map<IEnumerable<ProcedureDto>>(procedures);
+            else
+            {
+                // procedures.Add(new ProcedureDto() { ProcedureId = 1, ProcedureName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
+                // return await _tmssDbContext.Procedure.ToListAsync();
+                procedures = _mapper.Map<List<ProcedureDto>>(_tMSSDbContext.ProceduresClinic.ToList());
+
+            }
+            return procedures.ToList();
+            //  return (Task<IEnumerable<ProcedureDto>>)_mapper.Map<IEnumerable<ProcedureDto>>(procedures);
         }
     }
 }

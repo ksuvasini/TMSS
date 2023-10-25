@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
 using TMSS.Services.Interfaces;
+using TMSS.Services.Services;
 using TMSS.Web.Models;
 
 namespace TMSSDemo.Controllers
@@ -35,20 +37,35 @@ namespace TMSSDemo.Controllers
                         Text = clinic.ClinicName
                     });
                 }
-                ViewBag.Clinics = clinicList.ToList();
+              //  ViewBag.Clinics = clinicList.ToList();
             }
             return View(procedureViewModel);
+
+
         }
 
+        //public IActionResult Get(string? procedureName, string? clinicName)
+        //{
+        //    //return Json(new List<ProcedureDto>{
+        //    //    new ProcedureDto { ProcedureName = "Radiology", ClinicName = "CPU" },
+        //    //      new ProcedureDto { ProcedureName = "Radiology2", ClinicName = "Radiology" }
+        //    //   });
+        //    return Json(_procedureService.GetProcedures(procedureName, clinicName));
+        //}
         [HttpGet]
-        public IActionResult Get(string? procedureName, string? clinicName)
+        public async Task<IActionResult> Get(string? procedureName, string? clinicName)
         {
-            return Json(new List<ProcedureDto>{
-                new ProcedureDto { ProcedureName = "Radiology", ClinicName = "CPU" },
-                  new ProcedureDto { ProcedureName = "Radiology2", ClinicName = "Radiology" }
-               });
-            return Json(_procedureService.GetProcedures(procedureName, clinicName));
+            try
+            {
+                return Json(_mapper.Map<List<ProcedureViewModel>>(await _procedureService.GetProcedures(procedureName, clinicName)));
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
+
 
         [HttpPost]
         public IActionResult Create(ProcedureViewModel procedureViewModel)

@@ -25,39 +25,10 @@
         max-width: 100%;
     }
 </style>
-<div class="container">
-    <h3>Add Procedure</h3>
+@* <div class="container">
+ *@  
     @* <div class="container-full"> *@
-    <div class="row">
-        <div class="col-xs-8">
-            <form asp-action="Index" class="row gx-3 gy-2 align-items-center" id="frmProcedure">
-                <div class="col-sm-3">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <input type="hidden" id="ProcedureId" />
-                        <label asp-for="ProcedureName" class="control-label"></label>
-                        <input asp-for="ProcedureName" class="form-control" />
-                        <span asp-validation-for="ProcedureName" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label asp-for="ProcedureId" class="control-label"></label>
-                        @*  <input asp-for="ProcedureId" type="hidden" class="form-control" /> *@
-                        @Html.ListBoxFor(model => model.SelectedClinics,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
-                        <span asp-validation-for="ProcedureId" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <input type="button" value="Save Procedure" class="btn btn-primary" onclick="fnCreateProcAndClinicDetails()" style="margin-top: 21px;" />
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <br />
-    <h5> Procedure Details </h5>
+    <h4> Procedure Details </h4>
     <hr />
     <div class="row">
         <div class="col-xs-8">
@@ -74,17 +45,63 @@
                 <div class="col-auto">
                     <button id="btnClear" type="button" class="btn btn-outline-warning">Clear</button>
                 </div>
-                @*  <div class="col-auto" style="margin-left: 19%;">
+                 <div class="col-auto" style="margin-left: 19%;">
                 <div class="form-group">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                Add New Clinic
+                Add New Procedure
                 </button>
                 </div>
-                </div> *@
+                </div>
             </form>
         </div>
     </div>
     <br />
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Add New Clinic</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearFileds()" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-action="Index" class="row gx-3 gy-2 align-items-center" id="frmProcedure">
+@*                     <div class="col-sm-3">
+ *@                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <input type="hidden" id="ProcedureId" />
+                            <label asp-for="ProcedureName" class="control-label">Procedure Name</label>
+                            <input asp-for="ProcedureName" id="ProcId" class="form-control" />
+                            <span asp-validation-for="ProcedureName" class="text-danger"></span>
+@*                         </div>
+ *@                    </div>
+@*                     <div class="col-sm-3">
+ *@                        <div class="form-group">
+                            <label asp-for="ClinicId" class="control-label">Clinic Names</label>
+                            @*  <input asp-for="ProcedureId" type="hidden" class="form-control" /> *@
+@*                             @Html.ListBoxFor(model => model.SelectedClinics,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
+                            *@                                 
+                            @Html.ListBoxFor(model => model.SelectedClinics,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "form-control", multiple = "multiple", id = "selectedClinicIds" })
+
+                            <span asp-validation-for="ProcedureId" class="text-danger"></span>
+                        </div>
+@*                     </div>
+ *@                    @*  <div class="col-sm-3">
+                    <div class="form-group">
+                    <input type="button" value="Save Procedure" class="btn btn-primary" onclick="fnCreateProcAndClinicDetails()" style="margin-top: 21px;" />
+                    </div>
+                    </div> *@
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="clearFileds()">Cancel</button>
+                    <input value="Save Procedure" class="btn btn-primary" type="button" onclick="fnCreateProcAndClinicDetails()" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
     <div class="row" style="margin-top: 10px;">
 
@@ -92,8 +109,8 @@
         </table>
     </div>
 
-</div>
-
+@* </div>
+ *@
 @* <div class="container"> *@
 
 @* </div> *@
@@ -154,8 +171,8 @@
     $("#selectedClinicIds").multiselect({
         columns: 1,
         placeholder: 'Select Clinic',
-        includeSelectAllOption: true,
-        enableFiltering: true
+       // includeSelectAllOption: true,
+       // enableFiltering: true
     });
     // });
     function fnCreateProcAndClinicDetails() {

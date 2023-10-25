@@ -9,8 +9,10 @@ namespace TMSS.Web.Profiles
     {
         public UserViewModelProfile()
         {
-            CreateMap<Procedure, ProcedureDto>();
             CreateMap<ProcedureViewModel, ProcedureDto>();
+            CreateMap<ProcedureDto, ProcedureViewModel>();
+            CreateMap<ProcedureDto, ProceduresClinic>();
+            CreateMap<ProceduresClinic, ProcedureDto>();
             CreateMap<Clinic, ClinicDto>();
             CreateMap<ClinicViewModel, ClinicDto>();
             CreateMap<ClinicDto, ClinicViewModel>();

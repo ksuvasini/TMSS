@@ -5,10 +5,7 @@ namespace TMSS.Domain.Entities
 {
     public class ProceduresClinic : BaseEntity
     {
-        public ProceduresClinic()
-        {
-          //  this.Clinics = new HashSet<Clinic>();
-        }
+        
         [Key]
        public int ProcedureId { get; set; }
         public string? ProcedureName { get; set; }
