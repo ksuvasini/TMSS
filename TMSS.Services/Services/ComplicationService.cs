@@ -21,16 +21,14 @@ namespace TMSS.Services.Services
             _mapper = mapper;
         }
 
-        public ComplicationDto SaveComplication(ComplicationDto complicationDto)
+        public int SaveComplication(ComplicationDto complicationDto)
         {
-            return _complicationRepository.SaveProcedure(complicationDto);
-            throw new NotImplementedException();
+            return _complicationRepository.SaveComplication(complicationDto);
         }
 
-        public Task<IEnumerable<ComplicationDto>> GetComplications()
+        public async Task<List<ComplicationDto>> GetComplications(string? complicationName)
         {
-            return _complicationRepository.GetComplications();
-            throw new NotImplementedException();
+            return await _complicationRepository.GetComplications(complicationName);
         }
     }
 }

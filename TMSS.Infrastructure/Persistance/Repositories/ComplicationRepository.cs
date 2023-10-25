@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TMSS.DataAccess.DataContext;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Entities;
@@ -6,7 +7,7 @@ using TMSS.Domain.Interfaces;
 
 namespace TMSS.Infrastructure.Persistance.Repositories
 {
-    public class ComplicationRepository : BaseRepository, IComplicationRepository
+    public class ComplicationRepository : IComplicationRepository
     {
         public TMSSDbContext _tMSSDbContext { get; set; }
         private readonly IMapper _mapper;
@@ -16,14 +17,14 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             _mapper = mapper;
         }
 
-        public ComplicationDto SaveProcedure(ComplicationDto complicationDto)
+        public int SaveComplication(ComplicationDto complicationDto)
         {
             //Complication complication = _mapper.Map<Complication>(complicationDto);
             if (complicationDto.ComplicationId > 0)
             {
                 var exisitingComplication = _tMSSDbContext.Complication.FirstOrDefault(j => j.ComplicationId == complicationDto.ComplicationId);
                 exisitingComplication.ComplicationName = complicationDto.ComplicationName;
-                exisitingComplication.ModifiedBy = complicationDto.ModifiedBy;
+                exisitingComplication.ModifiedBy = "Admin";
                 exisitingComplication.ModifiedDate = DateTime.Now;
             }
             else
@@ -33,20 +34,17 @@ namespace TMSS.Infrastructure.Persistance.Repositories
                 _tMSSDbContext.Complication.Add(new Complication
                 {
                     ComplicationName = complicationDto.ComplicationName,
-                    CreatedBy = complicationDto.CreatedBy,
+                    CreatedBy = "Admin",
                     CreatedDate = DateTime.Now
                 });
             }
-            var result = _tMSSDbContext.SaveChanges();
-            throw new NotImplementedException();
+            return _tMSSDbContext.SaveChanges();
+           // throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ComplicationDto>> GetComplications()
+        public async Task<List<ComplicationDto>> GetComplications(string? complicationName)
         {
-            List<ComplicationDto> complications = new List<ComplicationDto>();
-            complications.Add(new ComplicationDto() { ComplicationId = 1, ComplicationName = "Test", CreatedBy = "Admin", CreatedDate = DateTime.Now });
-            // return await _tmssDbContext.Procedure.ToListAsync();
-            return (Task<IEnumerable<ComplicationDto>>)_mapper.Map<IEnumerable<ComplicationDto>>(complications);
+            return _mapper.Map<List<ComplicationDto>>(_tMSSDbContext.Complication.ToList());
         }
     }
 }

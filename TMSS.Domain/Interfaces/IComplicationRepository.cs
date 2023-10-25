@@ -9,7 +9,7 @@ namespace TMSS.Domain.Interfaces
 {
     public interface IComplicationRepository
     {
-        ComplicationDto SaveProcedure(ComplicationDto complicationDto);
-        Task<IEnumerable<ComplicationDto>> GetComplications();
+        int SaveComplication(ComplicationDto complicationDto);
+        Task<List<ComplicationDto>> GetComplications(string? complicationName);
     }
 }

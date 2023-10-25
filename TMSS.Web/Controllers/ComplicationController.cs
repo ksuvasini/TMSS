@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TMSS.Domain.DTO;
 using TMSS.Services.Interfaces;
+using TMSS.Services.Services;
 using TMSS.Web.Models;
 
 namespace TMSSDemo.Controllers
@@ -22,16 +23,11 @@ namespace TMSSDemo.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get(string? complicationName)
+
+        public async Task<IActionResult> Get(string? complicationName)
         {
-            List<ComplicationViewModel> complicationViewModels = new List<ComplicationViewModel>();
-
-            return Json(new List<ComplicationViewModel> {
-                new ComplicationViewModel { ComplicationName = "Testnew" },
-                new ComplicationViewModel { ComplicationName = "Test" }});
-            //return Json(_complicationService.GetComplications());
+            return Json(_mapper.Map<List<ComplicationViewModel>>(await _complicationService.GetComplications(complicationName)));
         }
-
         [HttpPost]
         public IActionResult Create(ComplicationViewModel complicationViewModel)
         {

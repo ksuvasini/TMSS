@@ -10,7 +10,7 @@ namespace TMSS.Services.Interfaces
 {
     public interface IComplicationService
     {
-        Task<IEnumerable<ComplicationDto>> GetComplications();
-        ComplicationDto SaveComplication(ComplicationDto complicationDto);
+        Task<List<ComplicationDto>> GetComplications(string? complicationName);
+        int SaveComplication(ComplicationDto complicationDto);
     }
 }

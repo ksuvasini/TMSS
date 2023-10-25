@@ -23,7 +23,9 @@ namespace TMSS.Web.Profiles
             CreateMap<LoginViewModel, UserDto>();
             CreateMap<RoleViewModel, RoleDto>();
             CreateMap<ComplicationViewModel, ComplicationDto>();
+            CreateMap<ComplicationDto, ComplicationViewModel>();
             CreateMap<ComplicationDto, Complication>();
+            CreateMap<Complication, ComplicationDto>();
             CreateMap<SurgeonViewModel, SurgeonDto>();
             CreateMap<SurgeonDto, Surgeon>();
 
