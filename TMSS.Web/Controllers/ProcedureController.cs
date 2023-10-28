@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using TMSS.Domain.DTO;
 using TMSS.Domain.Entities;
 using TMSS.Domain.Interfaces;
@@ -53,11 +54,26 @@ namespace TMSSDemo.Controllers
         //    return Json(_procedureService.GetProcedures(procedureName, clinicName));
         //}
         [HttpGet]
-        public async Task<IActionResult> Get(string? procedureName, string? clinicName)
+        public async Task<IActionResult> Get(int? page, int? limit, string sortBy, string direction, string? procedureName, string? clinicName)
         {
             try
             {
-                return Json(_mapper.Map<List<ProcedureViewModel>>(await _procedureService.GetProcedures(procedureName, clinicName)));
+                List<ProcedureViewModel> records;
+
+                int total;
+                var result = _mapper.Map<List<ProcedureViewModel>>(await _procedureService.GetProcedures(procedureName, clinicName));
+                total = result.Count();
+                if (page.HasValue && limit.HasValue)
+                {
+                    int start = (page.Value - 1) * limit.Value;
+                    records = result.Skip(start).Take(limit.Value).ToList();
+                }
+                else
+                {
+                    records = result.ToList();
+                }
+                return this.Json(new { records, total });
+               // return Json(_mapper.Map<List<ProcedureViewModel>>(await _procedureService.GetProcedures(procedureName, clinicName)));
 
             }
             catch(Exception ex)

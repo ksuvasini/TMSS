@@ -35,9 +35,9 @@ namespace TMSS.Domain.DTO
 
         public int ClinicId { get; set; }
 
-        public int ProcedureName { get; set; }
+        public string ProcedureName { get; set; }
 
-        public int ClinicName { get; set; }
+        public string ClinicName { get; set; }
 
     }
 }

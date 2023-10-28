@@ -49,10 +49,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" onclick="clearFileds()" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="surgeonForm">
-                        @* <div class="row">
-                        <div class="col-sm-3">
-                        *@                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <form asp-action="Index" class="row gx-3 gy-2 align-items-center" id="surgeonForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <input asp-for="SurgeonId" type="hidden" class="form-control" />
 
                         <div class="form-group">
@@ -60,8 +58,7 @@
                             <input asp-for="SurgeonFirstName" class="form-control" />
                             <span asp-validation-for="SurgeonFirstName" class="text-danger"></span>
                         </div>
-                        @*                             </div>
-                        *@                            <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="SurgeonLastName" class="control-label">Last Name</label>
                             <input asp-for="SurgeonLastName" class="form-control" />
                             <span asp-validation-for="SurgeonLastName" class="text-danger"></span>
@@ -71,46 +68,30 @@
                             <input asp-for="Speciality" class="form-control" />
                             <span asp-validation-for="Speciality" class="text-danger"></span>
                         </div>
-                        @*                             <div class="col-sm-3">
-                        *@                                <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="DatePPGranted" class="control-label">DatePPGranted</label>
                             <input asp-for="DatePPGranted" class="form-control" />
                             <span asp-validation-for="DatePPGranted" class="text-danger"></span>
                         </div>
-                        @*                             </div>
-                        *@
-                        @*                                  <div class="col-sm-3">
-                        *@                                <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="DateStartedFirstCase" class="control-label">DateStartedFirstCase</label>
                             <input asp-for="DateStartedFirstCase" class="form-control" />
                             <span asp-validation-for="DateStartedFirstCase" class="text-danger"></span>
                         </div>
-                        @*                             </div>
-                        *@@*                         </div>
-                        *@@*                         <div class="row">
-                        *@
-                        @*                             <div class="col-sm-3">
-                        *@                                <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="ALSDate" class="control-label">ALS Date</label>
                             <input asp-for="ALSDate" class="form-control" />
                             <span asp-validation-for="ALSDate" class="text-danger"></span>
                         </div>
-                        @*                             </div>
-                        *@
-                        @*                             <div class="col-sm-3">
-                        *@                                <div class="form-group">
-                            <label asp-for="ProcedureId" class="control-label"></label>
-                            @* <select asp-for="ProcedureName" class="form-control" /> *@
-                            @Html.DropDownListFor(m => m.ProcedureId, Model.Procedures, "--Please select--",new { @class="form-control" })
+                        <div class="form-group">
+                            <label class="control-label">Procedure Name</label><br />
+                            @Html.DropDownListFor(m => m.ProcedureId, (IEnumerable<SelectListItem>)Model.LstProcedures, "Select a Procedure", new { @id = "procedureDropdownId",style="width: 380px;",onchange="onChangeFunction()", @class="loadgoptions"})
                             <span asp-validation-for="ProcedureId" class="text-danger"></span>
                         </div>
 
-                        @*                             </div>
-                        *@
-                        @*                               <div class="col-sm-3">
-                        *@                                <div class="form-group">
+                        <div class="form-group">
                             <label asp-for="ClinicId" class="control-label"></label>
-                            @Html.DropDownListFor(m => m.ClinicId, Model.Clinics, "--Please select--",new { @class="form-control" })
+                            @Html.ListBoxFor(model => model.SelectedClinicIds,new MultiSelectList(Model.Clinics,"Value", "Text"), new { @class = "3col active", multiple = "multiple", id = "SelectedClinicIds",onclick="onclickAbc()" })
                             <span asp-validation-for="ClinicId" class="text-danger"></span>
                         </div>
                         @*                             </div>
@@ -139,9 +120,52 @@
         </table>
     </div>
 </div>
+<style>
+    .form-row {
+        display: flex;
+        margin-bottom: 29px;
+    }
+
+        .form-row:last-child {
+            margin-bottom: 0px;
+        }
+
+    .margin-top-10 {
+        margin-top: 10px;
+    }
+
+    .float-left {
+        float: left;
+    }
+
+    .float-right {
+        float: right;
+    }
+
+    .display-inline {
+        display: inline;
+    }
+
+    .display-inline-block {
+        display: inline-block;
+    }
+
+    .width-200 {
+        width: 200px;
+    }
+
+    .clear-both {
+        clear: both;
+    }
+
+    .gj-display-none {
+        display: none;
+    }
+</style>
 
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/js/jquery.multiselect.js"></script>
 @* <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script> *@
 <script src="~/lib/gijgo/modular/js/grid.js"></script>
 <script src="~/lib/gijgo/modular/js/grid.min.js"></script>
@@ -153,7 +177,7 @@
 <script type="text/javascript">
     var grid, dialog;
     $(document).ready(function () {
-        // $.validator.unobtrusive.parse($("#clinicform"));
+        $.validator.unobtrusive.parse($("#surgeonForm"));
         GetSurgeons();
         // dialog = $('#staticBackdrop').dialog({
         //     uiLibrary: 'bootstrap5',
@@ -190,10 +214,15 @@
             dataSource: '/Surgeon/Get',
             uiLibrary: 'bootstrap',
             columns: [
-                { field: 'surgeonName', title: 'Surgeon Name', sortable: true },
-                { field: 'DatePPGranted', title: 'PP Granted', sortable: true },
-                { field: 'DateFirstCase', title: 'First Case', sortable: true },
-                { field: 'ALSDate', title: 'ALS Date', sortable: true },
+                { field: 'surgeonFirstName', title: 'First Name', sortable: true },
+                { field: 'surgeonLastName', title: 'Last Name', sortable: true },
+                { field: 'speciality', title: 'Speciality', sortable: true },
+                { field: 'datePPGranted', title: 'DatePPGranted', sortable: true },
+                { field: 'dateStartedFirstCase', title: 'StartedFirstCase', sortable: true },
+                { field: 'alsDate', title: 'ALS Date', sortable: true },
+                { field: 'procedureName', title: 'ProcedureName', sortable: true },
+                { field: 'clinicName', title: 'ClinicName', sortable: true },
+
                 // { field: 'DatePPGranted', title: 'PP Granted', sortable: true },
                 { field: 'SurgeonId', hidden: true },
                 { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
