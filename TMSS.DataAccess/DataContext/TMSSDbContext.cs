@@ -16,6 +16,7 @@ namespace TMSS.DataAccess.DataContext
         {
             //  this.Configuration.ProxyCreationEnabled = true;
         }
+        public virtual DbSet<Surgery> Surgery { get; set; } 
         public virtual DbSet<ProceduresClinic> ProceduresClinic { get; set; }
         public virtual DbSet<Procedure> Procedure { get; set; }
 
@@ -25,7 +26,7 @@ namespace TMSS.DataAccess.DataContext
 
         public virtual DbSet<Surgeon> Surgeon { get; set; }
 
-        // public virtual DbSet<Clinic> Clinic { get; set; }
+        public virtual DbSet<Patient> Patient { get; set; }
         //   public virtual DbSet<Complication> Complication { get; set; }
         //  public virtual DbSet<Surgeon> Surgeon { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)

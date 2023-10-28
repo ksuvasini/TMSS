@@ -50,8 +50,8 @@ builder.Services.AddScoped<IManageUserService, ManageUserService>();
 //builder.Services.AddScoped<IClinicService, ClinicService>();
 builder.Services.AddScoped<IComplicationRepository, ComplicationRepository>();
 builder.Services.AddScoped<IComplicationService, ComplicationService>();
-//builder.Services.AddScoped<ISurgeonRepository, SurgeonRepository>();
-//builder.Services.AddScoped<ISurgeonService, SurgeonService>(); 
+builder.Services.AddScoped<ISurgeryRepository, SurgeryRepository>();
+builder.Services.AddScoped<ISurgeryService, SurgeryService>(); 
 
 
 var app = builder.Build();

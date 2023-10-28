@@ -31,6 +31,14 @@ namespace TMSS.Web.Profiles
             CreateMap<SurgeonViewModel, SurgeonDto>();
             CreateMap<SurgeonDto, SurgeonViewModel>();
             CreateMap<SurgeonDto, Surgeon>();
+            CreateMap<Surgery, SurgeryDto>();
+            CreateMap<SurgeryDto, Surgery>();
+            CreateMap<SurgeryDto, SurgeryViewModel>();
+            CreateMap<SurgeryViewModel, SurgeryDto>();
+            CreateMap<Patient, PatientDto>();
+            CreateMap<PatientDto, Patient>();
+            CreateMap<PatientViewModel, PatientDto>();
+            CreateMap<PatientDto, PatientViewModel>();
             CreateMap<SurgeonViewModel, Surgeon>();
             CreateMap<Surgeon, SurgeonDto>();
 
