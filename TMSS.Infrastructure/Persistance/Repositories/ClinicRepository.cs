@@ -21,10 +21,13 @@ namespace TMSS.Infrastructure.Persistance.Repositories
             List<ClinicDto> clinis = new List<ClinicDto>();
             if (!string.IsNullOrEmpty(clinicName) || !string.IsNullOrEmpty(clinicLocation))
             {
-                if (!string.IsNullOrEmpty(clinicName))
+                if(!string.IsNullOrEmpty(clinicName) && !string.IsNullOrEmpty(clinicLocation))
+                    clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicName.ToLower().Contains(clinicName.ToLower()) && jj.ClinicLocation.ToLower().Contains(clinicLocation.ToLower())).ToList());
+                else if (!string.IsNullOrEmpty(clinicName))
                     clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicName.ToLower().Contains(clinicName.ToLower())).ToList());
                 else if (!string.IsNullOrEmpty(clinicLocation))
-                    clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicLocation == clinicLocation).ToList());
+                    clinis = _mapper.Map<List<ClinicDto>>(_tMSSDbContext.Clinic.Where(jj => jj.ClinicLocation.ToLower().Contains(clinicLocation.ToLower())).ToList());
+               
 
             }
             else
