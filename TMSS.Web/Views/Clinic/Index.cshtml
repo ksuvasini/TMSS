@@ -86,7 +86,8 @@
 @* <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script> *@
 <script src="~/lib/gijgo/modular/js/grid.js"></script>
 <script src="~/lib/gijgo/modular/js/grid.min.js"></script>
-
+<link href="~/lib/font-awesome/css/fontawesome.min.css" rel="stylesheet" />
+@* <link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" /> *@
 <script type="text/javascript">
     var grid, dialog;
     $(document).ready(function () {
@@ -120,13 +121,15 @@
         grid = $('#tblClinic').grid({
             primaryKey: 'ID',
             dataSource: '/Clinic/Get',
-            uiLibrary: 'bootstrap',
+            uiLibrary: 'bootstrap5',
+            iconsLibrary: 'fontawesome',
             columns: [
                 { field: 'clinicName', title: 'Clinic Name', sortable: true },
                 { field: 'clinicLocation', title: 'Clinic Location', sortable: true },
                 { field: 'clinicId', hidden: true },
+                { width: 64, title: 'Edit', tmpl: '<span class="far fa-edit"></span>', align: 'center', events: { 'click': Edit } },
                 // { field: 'PlaceOfBirth', title: 'Place Of Birth', sortable: true },
-                { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
+              //  { title: '', field: 'Edit', width: 34, type: 'icon', icon: 'far fa-edit', tooltip: 'Edit', events: { 'click': Edit } },
                 // { title: '', field: 'Delete', width: 34, type: 'icon', icon: 'glyphicon-remove', tooltip: 'Delete', events: { 'click': Delete } }
             ],
             pager: { limit: 5, sizes: [2, 5, 10, 20] }
